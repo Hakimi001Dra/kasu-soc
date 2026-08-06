@@ -3,402 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department of Sociology — KASU</title>
+    <title>Department of Sociology — Kaduna State University</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        /* ── RESET ── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --kasu-green: #1A4731;
-            --kasu-gold: #C8941A;
-            --kasu-green-light: #E8F2EC;
-            --text-primary: #1A1A1A;
-            --text-secondary: #4A4A4A;
-            --text-muted: #767676;
-            --border: #D8D8D8;
-            --bg-white: #FFFFFF;
-            --bg-cream: #FAFAF7;
-        }
-        body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-white); line-height: 1.7; }
-        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        .section-padding { padding: 4rem 0; }
-        .btn-primary {
-            background: var(--kasu-gold);
-            color: var(--kasu-green);
-            font-weight: 600;
-            font-size: 14px;
-            padding: 12px 24px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn-primary:hover { background: #E0A420; transform: translateY(-1px); }
-        .btn-outline {
-            border: 1px solid rgba(255,255,255,0.4);
-            color: rgba(255,255,255,0.9);
-            font-size: 14px;
-            font-weight: 500;
-            padding: 12px 24px;
-            border-radius: 6px;
-            display: inline-block;
-            background: transparent;
-            cursor: pointer;
-        }
-        .btn-outline:hover { background: rgba(255,255,255,0.1); }
-        .loading { text-align: center; padding: 3rem; color: var(--text-muted); }
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--kasu-gold);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            border-radius: 8px;
-            color: white;
-            z-index: 9999;
-            max-width: 400px;
-        }
-        .toast-success { background: #22c55e; }
-        .toast-error { background: #ef4444; }
-        .toast-info { background: #3b82f6; }
-
-        /* ── TOP BAR ── */
-        .top-bar {
-            background: var(--kasu-green);
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-            padding: 6px 0;
-        }
-        .top-bar .inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .top-bar a { color: rgba(255,255,255,0.8); }
-        .top-bar a:hover { color: var(--kasu-gold); }
-        .top-bar .links { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-        /* ── HEADER ── */
-        header {
-            background: var(--bg-white);
-            border-bottom: 2px solid var(--kasu-green);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 65px;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        .brand-logo {
-            width: 40px; height: 40px;
-            background: var(--kasu-green);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 14px; font-weight: 700;
-            color: var(--kasu-gold);
-        }
-        .brand-text .dept {
-            font-family: 'Playfair Display', serif;
-            font-size: 13px; font-weight: 600;
-            color: var(--kasu-green);
-        }
-        .brand-text .uni { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 0.25rem;
-            align-items: center;
-        }
-        nav ul li a {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: block;
-            cursor: pointer;
-        }
-        nav ul li a:hover { background: var(--kasu-green-light); color: var(--kasu-green); }
-        nav ul li a.active { color: var(--kasu-green); background: var(--kasu-green-light); }
-        .nav-btn { background: var(--kasu-green) !important; color: white !important; border-radius: 6px !important; }
-        .mobile-toggle { display: none; background: none; border: none; font-size: 28px; cursor: pointer; padding: 8px; }
-
-        /* ── HERO ── */
-        .hero {
-            background: var(--kasu-green);
-            padding: 4rem 1.5rem 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-inner { max-width: 1200px; margin: 0 auto; }
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-        .hero h1 em { font-style: italic; color: var(--kasu-gold); }
-        .hero p { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 520px; margin-bottom: 1.5rem; }
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .hero-stats {
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 2rem;
-            max-width: 500px;
-        }
-        .stat-item { text-align: center; }
-        .stat-item .num {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--kasu-gold);
-            display: block;
-        }
-        .stat-item .label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
-        .stat-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); grid-column: 1 / -1; margin: 0; }
-
-        /* ── JOURNAL CARDS ── */
-        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .journal-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.25s;
-            display: flex;
-            flex-direction: column;
-        }
-        .journal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--kasu-green); }
-        .journal-card { position: relative; overflow: hidden; }
-        .journal-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
-        .journal-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-        .journal-vol { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--kasu-green); background: var(--kasu-green-light); padding: 3px 10px; border-radius: 100px; }
-        .journal-year { font-size: 12px; color: var(--text-muted); }
-        .journal-card h3 { font-family: 'IBM Plex Serif', serif; font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; flex-grow: 1; }
-        .journal-card .authors { font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
-        .journal-abstract { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .journal-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; }
-        .badge-area { display: flex; gap: 6px; flex-wrap: wrap; }
-        .badge { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-weight: 500; }
-        .badge-sociology { background: #EEF2FF; color: #3730A3; }
-        .badge-policy { background: #FFF3E0; color: #E65100; }
-        .badge-gender { background: #FCE4EC; color: #880E4F; }
-        .badge-urban { background: #E0F2F1; color: #004D40; }
-        .read-btn { font-size: 13px; font-weight: 500; color: var(--kasu-green); cursor: pointer; background: none; border: none; padding: 0; }
-        .read-btn:hover { text-decoration: underline; }
-
-        /* ── FACULTY ── */
-        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
-        .faculty-card {
-            background: var(--bg-white);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.25s;
-            text-align: center;
-        }
-        .faculty-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-3px); }
-        .faculty-photo { height: 100px; background: var(--kasu-green); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--kasu-gold); }
-        .faculty-photo img { width: 100%; height: 100%; object-fit: cover; }
-        .faculty-info { padding: 1rem; }
-        .faculty-info h4 { font-size: 14px; font-weight: 600; }
-        .faculty-info .title { font-size: 12px; color: var(--kasu-green); font-weight: 500; }
-        .faculty-info .specialization { font-size: 12px; color: var(--text-muted); font-style: italic; }
-
-        /* ── NEWS ── */
-        .news-list { display: flex; flex-direction: column; gap: 1rem; max-width: 800px; margin: 0 auto; }
-        .news-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--bg-white);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-        .news-date-block {
-            background: var(--kasu-green);
-            color: #fff;
-            border-radius: 8px;
-            padding: 6px 10px;
-            text-align: center;
-            min-width: 45px;
-            flex-shrink: 0;
-            height: fit-content;
-        }
-        .news-date-block .day { font-size: 1.2rem; font-weight: 700; display: block; font-family: 'Playfair Display', serif; }
-        .news-date-block .month { font-size: 10px; text-transform: uppercase; opacity: 0.8; }
-        .news-item h4 { font-size: 14px; font-weight: 600; }
-        .news-item p { font-size: 13px; color: var(--text-secondary); }
-        .news-type { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; display: block; }
-        .type-event { color: var(--kasu-gold); }
-        .type-news { color: var(--kasu-green); }
-
-        /* ── PROGRAMMES ── */
-        .programme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .programme-card {
-            border-left: 4px solid #3b82f6;
-            background: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .programme-card .level { font-size: 12px; font-weight: 600; background: #f5f5f5; padding: 2px 10px; border-radius: 100px; }
-
-        /* ── SECTION HEADER ── */
-        .section-header { margin-bottom: 2rem; }
-        .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kasu-gold); display: block; }
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3vw, 2rem);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .section-header h2::after { content: ''; display: block; width: 48px; height: 3px; background: var(--kasu-gold); margin-top: 8px; border-radius: 2px; }
-        .section-alt { background: var(--bg-cream); }
-
-        /* ── ADMIN LOGIN ── */
-        .admin-login-container { min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-cream); }
-        .admin-login-box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
-        .admin-login-box h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--kasu-green); margin-bottom: 1.5rem; text-align: center; }
-        .admin-login-box .form-group { margin-bottom: 1rem; }
-        .admin-login-box label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
-        .admin-login-box input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
-
-        /* ── ADMIN DASHBOARD ── */
-        .admin-layout { display: flex; min-height: 100vh; flex-wrap: wrap; }
-        .admin-sidebar {
-            width: 220px;
-            background: var(--kasu-green);
-            color: white;
-            padding: 1rem 0;
-            flex-shrink: 0;
-            min-height: 100vh;
-        }
-        .admin-sidebar .logo { padding: 0 1rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
-        .admin-sidebar .logo span { color: var(--kasu-gold); }
-        .admin-sidebar nav a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 1rem;
-            color: rgba(255,255,255,0.7);
-            transition: all 0.2s;
-            cursor: pointer;
-            font-size: 13px;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-        .admin-sidebar nav a:hover, .admin-sidebar nav a.active { background: rgba(255,255,255,0.1); color: white; }
-        .admin-sidebar .logout-btn {
-            margin-top: 2rem;
-            padding: 10px 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-            cursor: pointer;
-            font-size: 13px;
-            background: none;
-            border-left: none;
-            border-right: none;
-            border-bottom: none;
-            width: 100%;
-            text-align: left;
-        }
-        .admin-sidebar .logout-btn:hover { color: white; }
-        .admin-content { flex: 1; padding: 1.5rem; background: #f5f5f5; overflow: auto; }
-        .admin-content h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--kasu-green); margin-bottom: 1rem; }
-        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .admin-stat-card { background: white; padding: 1.2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .admin-stat-card h3 { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-        .admin-stat-card .number { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--kasu-green); }
-        .admin-table { background: white; border-radius: 10px; overflow: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .admin-table table { width: 100%; border-collapse: collapse; min-width: 400px; font-size: 13px; }
-        .admin-table th { background: #f9f9f9; text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
-        .admin-table td { padding: 10px 14px; border-top: 1px solid var(--border); }
-        .admin-table .actions { display: flex; gap: 6px; flex-wrap: wrap; }
-        .admin-table .actions button { padding: 4px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; }
-        .admin-table .actions .delete-btn { background: #fee2e2; color: #dc2626; }
-
-        .admin-form { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); max-width: 500px; }
-        .admin-form .form-group { margin-bottom: 1rem; }
-        .admin-form label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
-        .admin-form input, .admin-form textarea, .admin-form select { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
-        .admin-form textarea { min-height: 80px; resize: vertical; }
-        .admin-form .form-actions { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
-
-        /* ── FOOTER ── */
-        footer { background: #111; color: rgba(255,255,255,0.7); padding: 3rem 1.5rem 1.5rem; }
-        .footer-inner { max-width: 1200px; margin: 0 auto; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
-        .footer-brand p { font-size: 14px; line-height: 1.7; margin: 0.5rem 0; max-width: 300px; }
-        .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--kasu-gold); margin-bottom: 0.8rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 0.5rem; }
-        .footer-col ul li a { color: rgba(255,255,255,0.6); font-size: 13px; cursor: pointer; }
-        .footer-col ul li a:hover { color: white; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 12px; flex-wrap: wrap; gap: 0.5rem; }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            .mobile-toggle { display: block; }
-            nav ul { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; right: 0; background: white; padding: 1rem; border-bottom: 2px solid var(--kasu-green); z-index: 99; }
-            nav ul.open { display: flex; }
-            .admin-sidebar { width: 100%; min-height: auto; }
-            .admin-layout { flex-direction: column; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .hero-stats { grid-template-columns: 1fr 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- ═══════════ TOP BAR ═══════════ -->
     <div class="top-bar">
         <div class="inner">
-            <span>📍 KASU Sociology — Kaduna, Nigeria</span>
+            <span>📍 Faculty of Social Sciences, Kaduna State University — Kaduna, Nigeria</span>
             <div class="links">
-                <a href="#">KASU Main</a>
+                <a href="#">KASU Main Site</a>
                 <a href="#">E-Library</a>
+                <a href="#">Contact</a>
                 <a id="adminLink" href="#" style="color: var(--kasu-gold); font-weight: 600;">Admin</a>
             </div>
         </div>
@@ -410,7 +31,7 @@
             <div class="brand" onclick="showPage('home')">
                 <div class="brand-logo">SΩC</div>
                 <div class="brand-text">
-                    <span class="dept">Sociology Dept.</span>
+                    <span class="dept">Sociology Department</span>
                     <span class="uni">Kaduna State University</span>
                 </div>
             </div>
@@ -420,9 +41,9 @@
                     <li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
                     <li><a onclick="showPage('journals')" data-page="journals">Journals</a></li>
                     <li><a onclick="showPage('faculty')" data-page="faculty">Faculty</a></li>
-                    <li><a onclick="showPage('news')" data-page="news">News</a></li>
+                    <li><a onclick="showPage('news')" data-page="news">News & Events</a></li>
                     <li><a onclick="showPage('programmes')" data-page="programmes">Programmes</a></li>
-                    <li><a onclick="showPage('submit')" class="nav-btn" data-page="submit">Submit</a></li>
+                    <li><a onclick="showPage('submit')" class="nav-btn" data-page="submit">Submit Paper</a></li>
                 </ul>
             </nav>
         </div>
@@ -433,59 +54,271 @@
         <section class="hero">
             <div class="hero-inner">
                 <div class="hero-content">
+                    <div class="hero-eyebrow">Advancing Social Science in Northern Nigeria</div>
                     <h1>Understanding Society,<br><em>Shaping the Future</em></h1>
-                    <p>The Department of Sociology at Kaduna State University publishes peer-reviewed research, drives social inquiry, and prepares the next generation of sociologists.</p>
+                    <p>The Department of Sociology at Kaduna State University publishes peer-reviewed research, drives social inquiry, and prepares the next generation of sociologists for Nigeria and beyond.</p>
                     <div class="hero-actions">
-                        <button class="btn-primary" onclick="showPage('journals')">Browse Journals →</button>
-                        <button class="btn-outline" onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">About Us</button>
+                        <button class="btn-primary" onclick="showPage('journals')">Browse Our Journals →</button>
+                        <button class="btn-outline" onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">About the Department</button>
                     </div>
                 </div>
                 <div class="hero-stats" id="heroStats">
-                    <div class="stat-item"><span class="num" id="statYears">12+</span><span class="label">Years</span></div>
-                    <div class="stat-item"><span class="num" id="statAreas">6</span><span class="label">Research Areas</span></div>
+                    <div class="stat-item">
+                        <span class="num" id="statYears">12+</span>
+                        <span class="label">Years of Publication</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="num" id="statAreas">6</span>
+                        <span class="label">Active Research Areas</span>
+                    </div>
                     <hr class="stat-divider">
-                    <div class="stat-item"><span class="num" id="statArticles">200+</span><span class="label">Articles</span></div>
-                    <div class="stat-item"><span class="num" id="statFaculty">48</span><span class="label">Faculty</span></div>
+                    <div class="stat-item">
+                        <span class="num" id="statArticles">200+</span>
+                        <span class="label">Published Articles</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="num" id="statFaculty">48</span>
+                        <span class="label">Faculty & Associates</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-padding section-alt">
+        <div class="search-banner">
+            <div class="search-inner">
+                <span class="search-label">Search Publications:</span>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Author, title, keyword, volume…" onkeyup="searchJournals()">
+                    <button onclick="searchJournals()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="section-padding section-alt" id="journals-section">
             <div class="container-custom">
+                <div class="volume-banner">
+                    <div class="volume-banner-left">
+                        <h3>KASU Journal of Sociology & Social Sciences — Vol. 12, Issue 1 (2025)</h3>
+                        <p>Now available online. 14 peer-reviewed articles covering urbanisation, policy, gender, and conflict studies in Nigeria.</p>
+                    </div>
+                    <div class="volume-banner-right">
+                        <button class="btn-primary" onclick="showPage('journals')">Read Full Issue</button>
+                        <button class="btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">Download PDF</button>
+                    </div>
+                </div>
+
                 <div class="section-header">
                     <span class="section-eyebrow">Research & Publications</span>
                     <h2>Featured Journal Articles</h2>
+                    <p>Selected peer-reviewed articles published by faculty, researchers, and contributors to the KASU Journal of Sociology & Social Sciences.</p>
                 </div>
+
                 <div class="journal-grid" id="featuredJournals">
                     <div class="loading"><div class="loading-spinner"></div>Loading articles...</div>
                 </div>
-                <div style="text-align:center; margin-top:2rem;">
-                    <button class="btn-primary" onclick="showPage('journals')">View All →</button>
+
+                <div style="text-align:center; margin-top:2.5rem;">
+                    <button class="btn-primary" onclick="showPage('journals')">View All Publications →</button>
                 </div>
             </div>
         </section>
 
-        <section class="section-padding" id="about-section">
+        <section class="section-padding" id="news-section">
             <div class="container-custom">
                 <div class="section-header">
-                    <span class="section-eyebrow">About Us</span>
-                    <h2>Rooted in Kaduna. Engaged with the World.</h2>
-                    <p>The Department of Sociology at Kaduna State University is one of the foremost centres for sociological research and teaching in North-Central Nigeria.</p>
+                    <span class="section-eyebrow">Departmental Activities</span>
+                    <h2>News & Upcoming Events</h2>
+                </div>
+                <div class="news-grid">
+                    <div class="news-list" id="homeNewsList">
+                        <div class="loading"><div class="loading-spinner"></div>Loading news...</div>
+                    </div>
+                    <div>
+                        <div class="sidebar-card">
+                            <h4>Quick Links</h4>
+                            <ul class="sidebar-list">
+                                <li>Journal Author Guidelines</li>
+                                <li>Editorial Board</li>
+                                <li>Postgraduate Programmes</li>
+                                <li>Undergraduate Programmes</li>
+                                <li>Research Ethics Policy</li>
+                                <li>Staff Directory</li>
+                                <li>Contact the HOD</li>
+                            </ul>
+                        </div>
+                        <div class="sidebar-card">
+                            <h4>Archive by Volume</h4>
+                            <ul class="sidebar-list" id="archiveList">
+                                <li>Loading...</li>
+                            </ul>
+                        </div>
+                        <div class="sidebar-card">
+                            <h4>Indexed In</h4>
+                            <ul class="sidebar-list">
+                                <li>African Journals Online (AJOL)</li>
+                                <li>Google Scholar</li>
+                                <li>NigeriaJournalsOnline (NJOL)</li>
+                                <li>EBSCO Academic</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-padding section-alt">
+        <section class="section-padding section-alt" id="about-section">
+            <div class="container-custom">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <span class="section-eyebrow">About the Department</span>
+                        <h2>Rooted in Kaduna.<br>Engaged with the World.</h2>
+                        <p>The Department of Sociology at Kaduna State University is one of the foremost centres for sociological research and teaching in North-Central Nigeria. We combine rigorous scholarship with deep community engagement.</p>
+                        <p>Our research programmes address the most pressing social challenges in Kaduna State and Nigeria at large — from inter-ethnic relations and rural development to urban poverty, health inequalities, and climate-induced displacement.</p>
+                        <div class="about-features">
+                            <div class="feature-row">
+                                <div class="feature-icon">📚</div>
+                                <div class="feature-text">
+                                    <h5>Peer-Reviewed Research</h5>
+                                    <p>All publications undergo rigorous double-blind review by expert panels drawn from Nigerian and international universities.</p>
+                                </div>
+                            </div>
+                            <div class="feature-row">
+                                <div class="feature-icon">🎓</div>
+                                <div class="feature-text">
+                                    <h5>Academic Programmes</h5>
+                                    <p>B.Sc., M.Sc., and Ph.D. in Sociology, with specialisations in development, criminology, and health sociology.</p>
+                                </div>
+                            </div>
+                            <div class="feature-row">
+                                <div class="feature-icon">🤝</div>
+                                <div class="feature-text">
+                                    <h5>Community Partnerships</h5>
+                                    <p>Collaborative research with state ministries, NGOs, and communities across Kaduna State.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-panels" id="infoPanels">
+                        <div class="info-panel">
+                            <div class="info-panel-header" onclick="togglePanel(this)">
+                                <h4>📋 Editorial Policy & Scope</h4>
+                                <span>›</span>
+                            </div>
+                            <div class="info-panel-body" style="display:none;">
+                                The KASU Journal of Sociology & Social Sciences (KJSSS) publishes original research in all areas of sociology and cognate social science disciplines. The journal welcomes empirical, theoretical, and policy-oriented contributions relevant to Nigerian and African societies. Articles should be 6,000–9,000 words including references, formatted in APA 7th edition.
+                            </div>
+                        </div>
+                        <div class="info-panel">
+                            <div class="info-panel-header" onclick="togglePanel(this)">
+                                <h4>👥 Head of Department</h4>
+                                <span>›</span>
+                            </div>
+                            <div class="info-panel-body" style="display:none;">
+                                <strong>Prof. Maryam Aliyu</strong><br>
+                                Professor of Social Stratification & Development<br>
+                                <em>Office:</em> Room 204, Faculty of Social Sciences<br>
+                                <em>Email:</em> hod.sociology@kasu.edu.ng<br>
+                                <em>Office Hours:</em> Mon & Wed, 10am – 1pm
+                            </div>
+                        </div>
+                        <div class="info-panel">
+                            <div class="info-panel-header" onclick="togglePanel(this)">
+                                <h4>🌍 Research Areas</h4>
+                                <span>›</span>
+                            </div>
+                            <div class="info-panel-body" style="display:none;">
+                                Urban Sociology · Rural Development · Social Stratification · Political Sociology · Sociology of Health · Gender & Society · Criminology · Environmental Sociology · Religion & Society · Migration Studies · Conflict & Peacebuilding
+                            </div>
+                        </div>
+                        <div class="info-panel">
+                            <div class="info-panel-header" onclick="togglePanel(this)">
+                                <h4>📅 Academic Calendar 2024/25</h4>
+                                <span>›</span>
+                            </div>
+                            <div class="info-panel-body" style="display:none;">
+                                <strong>First Semester:</strong> October – February<br>
+                                <strong>Second Semester:</strong> March – July<br>
+                                <strong>Postgraduate Admissions:</strong> Applications open August<br>
+                                <strong>Journal Submission Deadlines:</strong> March (Vol. 1) · September (Vol. 2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="faculty-section">
             <div class="container-custom">
                 <div class="section-header">
                     <span class="section-eyebrow">Our People</span>
                     <h2>Faculty & Staff</h2>
+                    <p>Meet the scholars leading research and teaching at the Department of Sociology, KASU.</p>
                 </div>
                 <div class="faculty-grid" id="homeFacultyGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading faculty...</div>
                 </div>
                 <div style="text-align:center; margin-top:2rem;">
-                    <button class="btn-primary" onclick="showPage('faculty')">View All →</button>
+                    <button class="btn-primary" onclick="showPage('faculty')">View All Faculty →</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding section-dark" id="submit-section">
+            <div class="container-custom">
+                <div class="submit-grid">
+                    <div>
+                        <div class="section-header">
+                            <span class="section-eyebrow" style="color:var(--kasu-gold);">For Researchers</span>
+                            <h2 style="color:#fff;">Submit Your Research</h2>
+                            <p>We welcome original research from Nigerian and international scholars. All submissions are double-blind peer reviewed and decisions communicated within 8 weeks.</p>
+                        </div>
+                        <ol class="steps-list">
+                            <li>Prepare your manuscript according to the KJSSS Author Guidelines (APA 7th edition, 6,000–9,000 words)</li>
+                            <li>Remove all author-identifying information for blind review</li>
+                            <li>Submit via the online portal or email the editorial office directly</li>
+                            <li>Receive acknowledgement and your manuscript reference number</li>
+                            <li>Peer review process (8–12 weeks average turnaround)</li>
+                            <li>Revisions, acceptance, and publication in next available issue</li>
+                        </ol>
+                    </div>
+                    <div class="submit-card">
+                        <h4>Quick Submission Form</h4>
+                        <form id="submissionForm" onsubmit="submitPaper(event)">
+                            <div class="form-row">
+                                <label>Author Name(s)</label>
+                                <input type="text" id="subAuthor" placeholder="Dr. Jane Doe; Prof. John Musa" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Email Address</label>
+                                <input type="email" id="subEmail" placeholder="author@institution.edu.ng" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Manuscript Title</label>
+                                <input type="text" id="subTitle" placeholder="Full title of your paper" required>
+                            </div>
+                            <div class="form-row">
+                                <label>Research Area</label>
+                                <select id="subArea">
+                                    <option>Urban Sociology</option>
+                                    <option>Gender & Society</option>
+                                    <option>Political Sociology</option>
+                                    <option>Health Sociology</option>
+                                    <option>Environmental Sociology</option>
+                                    <option>Rural Development</option>
+                                    <option>Criminology</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <label>Abstract (max 250 words)</label>
+                                <textarea id="subAbstract" placeholder="Paste your abstract here…" rows="3" required></textarea>
+                            </div>
+                            <div style="margin-top: 1.25rem; display:flex; gap: 1rem; flex-wrap:wrap;">
+                                <button type="submit" class="btn-primary" style="flex:1; text-align:center;">Submit via Portal →</button>
+                                <button type="button" class="btn-outline" style="flex:1; text-align:center;" onclick="window.location.href='mailto:kjsss@kasu.edu.ng'">Email Editorial Office</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -493,11 +326,25 @@
 
     <!-- ═══════════ PAGE: JOURNALS ═══════════ -->
     <div id="page-journals" class="page-content">
+        <div class="hero" style="padding:3rem 2rem;">
+            <div class="container-custom">
+                <h1 style="color:white;font-family:'Playfair Display',serif;font-size:2.5rem;">Research Journals</h1>
+                <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:600px;">The KASU Journal of Sociology & Social Sciences — advancing sociological knowledge in Nigeria and beyond.</p>
+            </div>
+        </div>
+        <div class="search-banner">
+            <div class="search-inner">
+                <span class="search-label">Search Publications:</span>
+                <div class="search-box">
+                    <input type="text" id="searchJournalsPage" placeholder="Author, title, keyword, volume…" onkeyup="searchJournalsPage()">
+                    <button onclick="searchJournalsPage()">Search</button>
+                </div>
+            </div>
+        </div>
         <section class="section-padding section-alt">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Research Journals</h1>
                 <div class="journal-grid" id="allJournalsGrid">
-                    <div class="loading"><div class="loading-spinner"></div>Loading journals...</div>
+                    <div class="loading"><div class="loading-spinner"></div>Loading all journals...</div>
                 </div>
             </div>
         </section>
@@ -505,9 +352,14 @@
 
     <!-- ═══════════ PAGE: FACULTY ═══════════ -->
     <div id="page-faculty" class="page-content">
+        <div class="hero" style="padding:3rem 2rem;">
+            <div class="container-custom">
+                <h1 style="color:white;font-family:'Playfair Display',serif;font-size:2.5rem;">Our Faculty</h1>
+                <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:600px;">Dedicated scholars committed to excellence in teaching and research.</p>
+            </div>
+        </div>
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Our Faculty</h1>
                 <div class="faculty-grid" id="allFacultyGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading faculty...</div>
                 </div>
@@ -517,10 +369,15 @@
 
     <!-- ═══════════ PAGE: NEWS ═══════════ -->
     <div id="page-news" class="page-content">
+        <div class="hero" style="padding:3rem 2rem;">
+            <div class="container-custom">
+                <h1 style="color:white;font-family:'Playfair Display',serif;font-size:2.5rem;">News & Events</h1>
+                <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:600px;">Latest announcements, seminars, workshops, and departmental activities.</p>
+            </div>
+        </div>
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">News & Events</h1>
-                <div class="news-list" id="allNewsList">
+                <div class="news-list" id="allNewsList" style="max-width:800px;margin:0 auto;">
                     <div class="loading"><div class="loading-spinner"></div>Loading news...</div>
                 </div>
             </div>
@@ -529,10 +386,15 @@
 
     <!-- ═══════════ PAGE: PROGRAMMES ═══════════ -->
     <div id="page-programmes" class="page-content">
+        <div class="hero" style="padding:3rem 2rem;">
+            <div class="container-custom">
+                <h1 style="color:white;font-family:'Playfair Display',serif;font-size:2.5rem;">Academic Programmes</h1>
+                <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:600px;">Discover our undergraduate and postgraduate programmes in Sociology.</p>
+            </div>
+        </div>
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Academic Programmes</h1>
-                <div class="programme-grid" id="programmesGrid">
+                <div class="grid" id="programmesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;">
                     <div class="loading"><div class="loading-spinner"></div>Loading programmes...</div>
                 </div>
             </div>
@@ -541,28 +403,51 @@
 
     <!-- ═══════════ PAGE: SUBMIT ═══════════ -->
     <div id="page-submit" class="page-content">
+        <div class="hero" style="padding:3rem 2rem;">
+            <div class="container-custom">
+                <h1 style="color:white;font-family:'Playfair Display',serif;font-size:2.5rem;">Submit Your Research</h1>
+                <p style="color:rgba(255,255,255,0.7);font-size:1.1rem;max-width:600px;">Share your work with the academic community through our peer-reviewed journal.</p>
+            </div>
+        </div>
         <section class="section-padding section-alt">
-            <div class="container-custom" style="max-width:600px;">
+            <div class="container-custom" style="max-width:800px;">
                 <div style="background:white;border-radius:12px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
-                    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1rem;">Submit Your Research</h2>
-                    <form id="submissionForm" onsubmit="submitPaper(event)">
+                    <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--text-primary);margin-bottom:1.5rem;">Manuscript Submission Form</h2>
+                    <form id="submissionFormFull" onsubmit="submitPaper(event)">
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Author Name(s) *</label>
-                            <input type="text" id="subAuthor" required>
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Author Name(s) *</label>
+                            <input type="text" id="subAuthorFull" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Email *</label>
-                            <input type="email" id="subEmail" required>
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Email Address *</label>
+                            <input type="email" id="subEmailFull" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Title *</label>
-                            <input type="text" id="subTitle" required>
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Manuscript Title *</label>
+                            <input type="text" id="subTitleFull" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Abstract *</label>
-                            <textarea id="subAbstract" rows="4" required></textarea>
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Research Area</label>
+                            <select id="subAreaFull" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
+                                <option>Urban Sociology</option>
+                                <option>Gender & Society</option>
+                                <option>Political Sociology</option>
+                                <option>Health Sociology</option>
+                                <option>Environmental Sociology</option>
+                                <option>Rural Development</option>
+                                <option>Criminology</option>
+                                <option>Other</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn-primary" style="width:100%;">Submit →</button>
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Abstract (max 250 words) *</label>
+                            <textarea id="subAbstractFull" rows="4" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;resize:vertical;"></textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label style="display:block;font-weight:500;margin-bottom:4px;">Manuscript File (PDF/DOCX)</label>
+                            <input type="file" id="subFile" style="width:100%;padding:8px;">
+                        </div>
+                        <button type="submit" class="btn-primary" style="width:100%;text-align:center;">Submit Manuscript →</button>
                     </form>
                 </div>
             </div>
@@ -584,7 +469,7 @@
                         <input type="password" id="adminPassword" placeholder="••••••••" required>
                     </div>
                     <div id="adminLoginError" style="color:#dc2626;font-size:14px;margin-bottom:1rem;display:none;"></div>
-                    <button type="submit" class="btn-primary" style="width:100%;">Login</button>
+                    <button type="submit" class="btn-primary">Login</button>
                 </form>
             </div>
         </div>
@@ -601,10 +486,12 @@
                     <a onclick="showAdminPage('faculty')" data-admin="faculty">👨‍🏫 Faculty</a>
                     <a onclick="showAdminPage('news')" data-admin="news">📰 News</a>
                     <a onclick="showAdminPage('programmes')" data-admin="programmes">🎓 Programmes</a>
+                    <a onclick="showAdminPage('settings')" data-admin="settings">⚙️ Settings</a>
                 </nav>
                 <button class="logout-btn" onclick="adminLogout()">🚪 Logout</button>
             </div>
             <div class="admin-content">
+                <!-- Admin Dashboard -->
                 <div id="admin-dashboard">
                     <h1>Dashboard</h1>
                     <div class="admin-stats" id="adminStats">
@@ -614,67 +501,128 @@
                         <div class="admin-stat-card"><h3>Programmes</h3><div class="number" id="adminStatProgrammes">0</div></div>
                     </div>
                 </div>
+
+                <!-- Admin Journals -->
                 <div id="admin-journals" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                         <h1>Manage Journals</h1>
-                        <button class="btn-primary" onclick="showAdminForm('journal')">+ New</button>
+                        <button class="btn-primary" onclick="showAdminForm('journal')">+ New Article</button>
                     </div>
-                    <div id="adminJournalList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminJournalForm" style="display:none;margin-top:1.5rem;">
+                    <div id="adminJournalList" class="admin-table">
+                        <div class="loading"><div class="loading-spinner"></div>Loading...</div>
+                    </div>
+                    <div id="adminJournalForm" style="display:none;margin-top:2rem;">
                         <div class="admin-form">
-                            <h2>Add Journal</h2>
+                            <h2 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Add Journal Article</h2>
                             <form onsubmit="adminSaveJournal(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="ajTitle" required></div>
-                                <div class="form-group"><label>Authors *</label><input type="text" id="ajAuthors" required></div>
-                                <div class="form-group"><label>Abstract *</label><textarea id="ajAbstract" rows="3" required></textarea></div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-                                    <div class="form-group"><label>Volume *</label><input type="number" id="ajVolume" required></div>
-                                    <div class="form-group"><label>Year *</label><input type="number" id="ajYear" required></div>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="ajTitle" required>
                                 </div>
-                                <div class="form-group"><label>Date *</label><input type="date" id="ajDate" required></div>
-                                <div class="form-group"><label>Tags</label><input type="text" id="ajTags" placeholder="Urban, Policy"></div>
+                                <div class="form-group">
+                                    <label>Authors *</label>
+                                    <input type="text" id="ajAuthors" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Abstract *</label>
+                                    <textarea id="ajAbstract" rows="4" required></textarea>
+                                </div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                    <div class="form-group">
+                                        <label>Volume *</label>
+                                        <input type="number" id="ajVolume" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year *</label>
+                                        <input type="number" id="ajYear" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Published Date *</label>
+                                    <input type="date" id="ajDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tags (comma separated)</label>
+                                    <input type="text" id="ajTags" placeholder="Urban Studies, Policy">
+                                </div>
+                                <div class="form-group">
+                                    <label>PDF URL</label>
+                                    <input type="url" id="ajPdfUrl" placeholder="https://example.com/paper.pdf">
+                                </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Save</button>
-                                    <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('journal')">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save Article</button>
+                                    <button type="button" class="btn-outline-dark" onclick="hideAdminForm('journal')">Cancel</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <!-- Admin Faculty -->
                 <div id="admin-faculty" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                         <h1>Manage Faculty</h1>
-                        <button class="btn-primary" onclick="showAdminForm('faculty')">+ New</button>
+                        <button class="btn-primary" onclick="showAdminForm('faculty')">+ Add Faculty</button>
                     </div>
-                    <div id="adminFacultyList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminFacultyForm" style="display:none;margin-top:1.5rem;">
+                    <div id="adminFacultyList" class="admin-table">
+                        <div class="loading"><div class="loading-spinner"></div>Loading...</div>
+                    </div>
+                    <div id="adminFacultyForm" style="display:none;margin-top:2rem;">
                         <div class="admin-form">
-                            <h2>Add Faculty</h2>
+                            <h2 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Add Faculty Member</h2>
                             <form onsubmit="adminSaveFaculty(event)">
-                                <div class="form-group"><label>Name *</label><input type="text" id="afName" required></div>
-                                <div class="form-group"><label>Title *</label><input type="text" id="afTitle" required></div>
-                                <div class="form-group"><label>Specialization *</label><input type="text" id="afSpecialization" required></div>
-                                <div class="form-group"><label>Photo URL</label><input type="url" id="afPhoto"></div>
+                                <div class="form-group">
+                                    <label>Name *</label>
+                                    <input type="text" id="afName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="afTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Specialization *</label>
+                                    <input type="text" id="afSpecialization" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="afEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label>Office</label>
+                                    <input type="text" id="afOffice">
+                                </div>
+                                <div class="form-group">
+                                    <label>Photo URL</label>
+                                    <input type="url" id="afPhoto" placeholder="https://example.com/photo.jpg">
+                                </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Save</button>
-                                    <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('faculty')">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save Faculty</button>
+                                    <button type="button" class="btn-outline-dark" onclick="hideAdminForm('faculty')">Cancel</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <!-- Admin News -->
                 <div id="admin-news" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
-                        <h1>Manage News</h1>
-                        <button class="btn-primary" onclick="showAdminForm('news')">+ New</button>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                        <h1>Manage News & Events</h1>
+                        <button class="btn-primary" onclick="showAdminForm('news')">+ Add News</button>
                     </div>
-                    <div id="adminNewsList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminNewsForm" style="display:none;margin-top:1.5rem;">
+                    <div id="adminNewsList" class="admin-table">
+                        <div class="loading"><div class="loading-spinner"></div>Loading...</div>
+                    </div>
+                    <div id="adminNewsForm" style="display:none;margin-top:2rem;">
                         <div class="admin-form">
-                            <h2>Add News</h2>
+                            <h2 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Add News/Event</h2>
                             <form onsubmit="adminSaveNews(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="anTitle" required></div>
-                                <div class="form-group"><label>Type *</label>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="anTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type *</label>
                                     <select id="anType" required>
                                         <option value="Seminar">Seminar</option>
                                         <option value="Call for Papers">Call for Papers</option>
@@ -682,41 +630,106 @@
                                         <option value="Workshop">Workshop</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>Date *</label><input type="date" id="anDate" required></div>
-                                <div class="form-group"><label>Description *</label><textarea id="anDescription" rows="3" required></textarea></div>
+                                <div class="form-group">
+                                    <label>Date *</label>
+                                    <input type="date" id="anDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="anDescription" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image URL</label>
+                                    <input type="url" id="anImage" placeholder="https://example.com/image.jpg">
+                                </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Save</button>
-                                    <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('news')">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save News</button>
+                                    <button type="button" class="btn-outline-dark" onclick="hideAdminForm('news')">Cancel</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <!-- Admin Programmes -->
                 <div id="admin-programmes" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                         <h1>Manage Programmes</h1>
-                        <button class="btn-primary" onclick="showAdminForm('programme')">+ New</button>
+                        <button class="btn-primary" onclick="showAdminForm('programme')">+ Add Programme</button>
                     </div>
-                    <div id="adminProgrammesList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminProgrammeForm" style="display:none;margin-top:1.5rem;">
+                    <div id="adminProgrammesList" class="admin-table">
+                        <div class="loading"><div class="loading-spinner"></div>Loading...</div>
+                    </div>
+                    <div id="adminProgrammeForm" style="display:none;margin-top:2rem;">
                         <div class="admin-form">
-                            <h2>Add Programme</h2>
+                            <h2 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">Add Programme</h2>
                             <form onsubmit="adminSaveProgramme(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="apTitle" required></div>
-                                <div class="form-group"><label>Level *</label>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="apTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Level *</label>
                                     <select id="apLevel" required>
                                         <option value="B.Sc">B.Sc</option>
                                         <option value="M.Sc">M.Sc</option>
                                         <option value="PhD">PhD</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>Description *</label><textarea id="apDescription" rows="3" required></textarea></div>
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="apDescription" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Duration (e.g., "4 years")</label>
+                                    <input type="text" id="apDuration">
+                                </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Save</button>
-                                    <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('programme')">Cancel</button>
+                                    <button type="submit" class="btn-primary">Save Programme</button>
+                                    <button type="button" class="btn-outline-dark" onclick="hideAdminForm('programme')">Cancel</button>
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Admin Settings -->
+                <div id="admin-settings" style="display:none;">
+                    <h1>Website Settings</h1>
+                    <div class="admin-form" style="max-width:100%;">
+                        <form onsubmit="adminSaveSettings(event)">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                                <div class="form-group">
+                                    <label>Site Name</label>
+                                    <input type="text" id="setSiteName" value="Department of Sociology, Kaduna State University">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tagline</label>
+                                    <input type="text" id="setTagline" value="Advancing Social Science in Northern Nigeria">
+                                </div>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;">
+                                <div class="form-group">
+                                    <label>Contact Email</label>
+                                    <input type="email" id="setEmail" value="sociology@kasu.edu.ng">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" id="setPhone" value="+234 (0) 62 XXX XXXX">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" id="setAddress" value="Faculty of Social Sciences, KASU, Tafawa Balewa Way, Kaduna, Nigeria">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Footer Copyright</label>
+                                <input type="text" id="setCopyright" value="© 2025 Department of Sociology, Kaduna State University. All rights reserved.">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Save Settings</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -728,492 +741,66 @@
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div><strong style="font-family:'Playfair Display',serif;font-size:1.1rem;color:white;">Sociology Department</strong></div>
-                    <p>Advancing sociological knowledge in Northern Nigeria.</p>
+                    <div class="kasu-badge">
+                        <div class="kasu-badge-logo">SΩC</div>
+                        <div>
+                            <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:white;">Department of Sociology</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.5);">Kaduna State University</div>
+                        </div>
+                    </div>
+                    <p>Advancing sociological knowledge in Northern Nigeria and contributing to the national conversation on social development, equity, and justice.</p>
+                    <p style="font-size:12px;">Faculty of Social Sciences, KASU<br>
+                    Tafawa Balewa Way, Kaduna, Nigeria<br>
+                    sociology@kasu.edu.ng · +234 (0) 62 XXX XXXX</p>
                 </div>
                 <div class="footer-col">
-                    <h5>Quick Links</h5>
+                    <h5>Publications</h5>
                     <ul>
-                        <li><a onclick="showPage('journals')">Journals</a></li>
-                        <li><a onclick="showPage('faculty')">Faculty</a></li>
-                        <li><a onclick="showPage('news')">News</a></li>
-                        <li><a onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a onclick="showPage('journals')">Journal Home</a></li>
+                        <li><a onclick="showPage('journals')">Current Issue</a></li>
+                        <li><a onclick="showPage('journals')">Archives</a></li>
+                        <li><a>Author Guidelines</a></li>
+                        <li><a>Editorial Board</a></li>
+                        <li><a>Peer Review Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h5>Contact</h5>
+                    <h5>Department</h5>
                     <ul>
-                        <li>sociology@kasu.edu.ng</li>
-                        <li>+234 (0) 62 XXX XXXX</li>
+                        <li><a onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'});showPage('home')">About Us</a></li>
+                        <li><a onclick="showPage('faculty')">Faculty & Staff</a></li>
+                        <li><a>Research Areas</a></li>
+                        <li><a onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a>Postgraduate</a></li>
+                        <li><a>Contact HOD</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="#">KASU E-Library</a></li>
+                        <li><a href="#">AJOL Listings</a></li>
+                        <li><a>Research Ethics</a></li>
+                        <li><a>Student Resources</a></li>
+                        <li><a>News Archive</a></li>
+                        <li><a href="#">KASU Main Portal</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2025 Department of Sociology, KASU</span>
+                <span id="footerCopyright">© 2025 Department of Sociology, Kaduna State University. All rights reserved.</span>
+                <div>
+                    <a>Privacy Policy</a> &nbsp;·&nbsp;
+                    <a>Accessibility</a> &nbsp;·&nbsp;
+                    <a>Sitemap</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- ═══════════ TOAST ═══════════ -->
     <div id="toast" class="toast" style="display:none;"></div>
 
-    <!-- ═══════════ JAVASCRIPT ═══════════ -->
-    <script>
-        // ─── ⚠️ REPLACE WITH YOUR SUPABASE CREDENTIALS ⚠️ ───
-        const SUPABASE_URL = 'https://xonqebmlxlbvvhvmhhxv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc';
-
-        // ─── STATE ──────────────────────────────────────────
-        let allJournals = [],
-            allFaculty = [],
-            allNews = [],
-            allProgrammes = [];
-        let adminSession = null;
-        let supabase = null;
-
-        // ─── INIT ────────────────────────────────────────────
-        function init() {
-            try {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('✅ Supabase initialized');
-
-                supabase.auth.getSession().then(({ data }) => {
-                    if (data.session) { adminSession = data.session;
-                        console.log('✅ Admin session found'); }
-                }).catch(() => {});
-
-                refreshAllData();
-
-                document.getElementById('adminLink').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    adminSession ? (showPage('admin'), loadAdminDashboard()) : showPage('admin-login');
-                });
-
-                // Test button click
-                console.log('✅ Site ready!');
-            } catch (e) {
-                console.error('❌ Init error:', e);
-                // Show error on page
-                document.body.innerHTML +=
-                    `<div style="position:fixed;bottom:10px;left:10px;background:red;color:white;padding:10px;z-index:9999;font-size:12px;">⚠️ Error: ${e.message}</div>`;
-            }
-        }
-
-        function showToast(msg, type = 'success') {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = `toast toast-${type}`;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
-
-        function formatDate(d) {
-            try { return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }); } catch { return 'Invalid date'; }
-        }
-
-        function getBadgeColor(tag) {
-            const c = { 'Urban Studies': 'badge-urban', 'Policy': 'badge-policy', 'Gender': 'badge-gender' };
-            return c[tag] || 'badge-sociology';
-        }
-
-        // ─── PAGE NAVIGATION ─────────────────────────────────
-        function showPage(page) {
-            document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
-            const t = document.getElementById(`page-${page}`);
-            if (t) t.classList.add('active');
-            document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
-            const n = document.querySelector(`#mainNav a[data-page="${page}"]`);
-            if (n) n.classList.add('active');
-            document.getElementById('mainNav').classList.remove('open');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mainNav').classList.toggle('open');
-        }
-
-        // ─── DATA FETCHING ──────────────────────────────────
-        async function fetchJournals() {
-            try {
-                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
-                if (error) throw error;
-                allJournals = data || [];
-                return allJournals;
-            } catch (e) { console.error('Error fetching journals:', e); return []; }
-        }
-
-        async function fetchFaculty() {
-            try {
-                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
-                if (error) throw error;
-                allFaculty = data || [];
-                return allFaculty;
-            } catch (e) { console.error('Error fetching faculty:', e); return []; }
-        }
-
-        async function fetchNews() {
-            try {
-                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
-                if (error) throw error;
-                allNews = data || [];
-                return allNews;
-            } catch (e) { console.error('Error fetching news:', e); return []; }
-        }
-
-        async function fetchProgrammes() {
-            try {
-                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
-                if (error) throw error;
-                allProgrammes = data || [];
-                return allProgrammes;
-            } catch (e) { console.error('Error fetching programmes:', e); return []; }
-        }
-
-        async function refreshAllData() {
-            await Promise.all([fetchJournals(), fetchFaculty(), fetchNews(), fetchProgrammes()]);
-            renderHomePage();
-            renderAllPages();
-        }
-
-        // ─── RENDER ──────────────────────────────────────────
-        function renderJournalCard(a) {
-            const tags = a.tags || [];
-            return `<div class="journal-card">
-                <div class="journal-meta">
-                    <span class="journal-vol">Vol. ${a.volume} · ${a.year}</span>
-                    <span class="journal-year">${formatDate(a.published_date)}</span>
-                </div>
-                <h3>${a.title}</h3>
-                <div class="authors">${a.authors}</div>
-                <p class="journal-abstract">${a.abstract}</p>
-                <div class="journal-card-footer">
-                    <div class="badge-area">${tags.slice(0,2).map(t => `<span class="badge ${getBadgeColor(t)}">${t}</span>`).join('')}</div>
-                    <button class="read-btn" onclick="viewArticle('${a.slug}')">Read →</button>
-                </div>
-            </div>`;
-        }
-
-        function renderFacultyCard(m) {
-            const i = m.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-            return `<div class="faculty-card">
-                <div class="faculty-photo">${m.photo_url ? `<img src="${m.photo_url}" alt="${m.name}">` : i}</div>
-                <div class="faculty-info"><h4>${m.name}</h4><div class="title">${m.title}</div><div class="specialization">${m.specialization}</div></div>
-            </div>`;
-        }
-
-        function renderNewsItem(n) {
-            const d = new Date(n.date);
-            const mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const tc = { 'Seminar': 'type-event', 'Call for Papers': 'type-event', 'Department News': 'type-news' } [n.type] ||
-            'type-news';
-            return `<div class="news-item">
-                <div class="news-date-block"><span class="day">${d.getDate()}</span><span class="month">${mn[d.getMonth()]}</span></div>
-                <div><span class="news-type ${tc}">${n.type}</span><h4>${n.title}</h4><p>${n.description}</p></div>
-            </div>`;
-        }
-
-        function renderProgrammeCard(p) {
-            const colors = { 'B.Sc': '#3b82f6', 'M.Sc': '#22c55e', 'PhD': '#a855f7' };
-            return `<div class="programme-card" style="border-left-color:${colors[p.level]||'#ccc'};">
-                <div style="display:flex;justify-content:space-between;align-items:start;">
-                    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;">${p.title}</h3>
-                    <span class="level">${p.level}</span>
-                </div>
-                <p style="color:var(--text-secondary);font-size:13px;margin:0.3rem 0;">${p.description}</p>
-                ${p.duration ? `<p style="font-size:12px;color:var(--text-muted);">⏱️ ${p.duration}</p>` : ''}
-            </div>`;
-        }
-
-        // ─── VIEW ARTICLE ──────────────────────────────────
-        async function viewArticle(slug) {
-            try {
-                const { data: a, error } = await supabase.from('journals').select('*').eq('slug', slug).single();
-                if (error) throw error;
-                const modal = document.createElement('div');
-                modal.style.cssText =
-                    `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;`;
-                modal.innerHTML = `<div style="background:white;border-radius:12px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:1.5rem;position:relative;">
-                    <button onclick="this.closest('div[style]').remove()" style="float:right;background:none;border:none;font-size:24px;cursor:pointer;">✕</button>
-                    <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;">${a.title}</h2>
-                    <p style="color:var(--text-muted);font-style:italic;">${a.authors}</p>
-                    <p style="font-size:13px;color:var(--text-muted);margin:0.5rem 0;">Vol. ${a.volume} · ${a.year}</p>
-                    <h3 style="font-size:1rem;margin-top:1rem;">Abstract</h3>
-                    <p style="color:var(--text-secondary);line-height:1.8;">${a.abstract}</p>
-                    ${a.pdf_url ? `<a href="${a.pdf_url}" target="_blank" class="btn-primary" style="display:inline-block;margin-top:1rem;">Download PDF</a>` : ''}
-                </div>`;
-                document.body.appendChild(modal);
-                modal.onclick = e => { if (e.target === modal) modal.remove(); };
-            } catch (e) { showToast('Error loading article', 'error'); }
-        }
-
-        // ─── RENDER PAGES ──────────────────────────────────
-        function renderHomePage() {
-            const f = document.getElementById('featuredJournals');
-            f.innerHTML = allJournals.slice(0, 6).map(renderJournalCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles. Add in admin.</p>';
-            const ff = document.getElementById('homeFacultyGrid');
-            ff.innerHTML = allFaculty.slice(0, 8).map(renderFacultyCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty.</p>';
-            const y = allJournals.length ? new Date().getFullYear() - Math.min(...allJournals.map(j => j.year)) + 1 : 0;
-            const t = new Set(allJournals.flatMap(j => j.tags || []));
-            document.getElementById('statYears').textContent = y + '+';
-            document.getElementById('statAreas').textContent = t.size || 6;
-            document.getElementById('statArticles').textContent = allJournals.length + '+';
-            document.getElementById('statFaculty').textContent = allFaculty.length || 48;
-        }
-
-        function renderAllPages() {
-            document.getElementById('allJournalsGrid').innerHTML = allJournals.map(renderJournalCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles.</p>';
-            document.getElementById('allFacultyGrid').innerHTML = allFaculty.map(renderFacultyCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty.</p>';
-            document.getElementById('allNewsList').innerHTML = allNews.map(renderNewsItem).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No news.</p>';
-            document.getElementById('programmesGrid').innerHTML = allProgrammes.map(renderProgrammeCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No programmes.</p>';
-        }
-
-        // ─── SUBMIT ──────────────────────────────────────────
-        function submitPaper(e) {
-            e.preventDefault();
-            showToast('Thank you! Submission received.', 'success');
-            document.getElementById('submissionForm').reset();
-            showPage('home');
-        }
-
-        // ─── ADMIN ──────────────────────────────────────────
-        async function adminLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            const err = document.getElementById('adminLoginError');
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) throw error;
-                adminSession = data.session;
-                err.style.display = 'none';
-                showToast('Login successful!', 'success');
-                showPage('admin');
-                loadAdminDashboard();
-            } catch (e) { err.textContent = e.message || 'Invalid credentials';
-                err.style.display = 'block'; }
-        }
-
-        async function adminLogout() {
-            await supabase.auth.signOut();
-            adminSession = null;
-            showToast('Logged out', 'info');
-            showPage('home');
-        }
-
-        function showAdminPage(p) {
-            document.querySelectorAll('.admin-content > div').forEach(el => el.style.display = 'none');
-            const t = document.getElementById(`admin-${p}`);
-            if (t) t.style.display = 'block';
-            document.querySelectorAll('.admin-sidebar nav a').forEach(a => a.classList.remove('active'));
-            const l = document.querySelector(`.admin-sidebar nav a[data-admin="${p}"]`);
-            if (l) l.classList.add('active');
-            if (p === 'dashboard') loadAdminDashboard();
-            if (p === 'journals') loadAdminJournals();
-            if (p === 'faculty') loadAdminFaculty();
-            if (p === 'news') loadAdminNews();
-            if (p === 'programmes') loadAdminProgrammes();
-        }
-
-        function showAdminForm(t) {
-            const el = document.getElementById(`admin${t.charAt(0).toUpperCase() + t.slice(1)}Form`);
-            if (el) { el.style.display = 'block';
-                el.scrollIntoView({ behavior: 'smooth' }); }
-        }
-
-        function hideAdminForm(t) {
-            const el = document.getElementById(`admin${t.charAt(0).toUpperCase() + t.slice(1)}Form`);
-            if (el) el.style.display = 'none';
-        }
-
-        async function loadAdminDashboard() {
-            try {
-                const [{ count: jc }, { count: fc }, { count: nc }, { count: pc }] = await Promise.all([
-                    supabase.from('journals').select('*', { count: 'exact', head: true }),
-                    supabase.from('faculty').select('*', { count: 'exact', head: true }),
-                    supabase.from('news_events').select('*', { count: 'exact', head: true }),
-                    supabase.from('programmes').select('*', { count: 'exact', head: true })
-                ]);
-                document.getElementById('adminStatJournals').textContent = jc || 0;
-                document.getElementById('adminStatFaculty').textContent = fc || 0;
-                document.getElementById('adminStatNews').textContent = nc || 0;
-                document.getElementById('adminStatProgrammes').textContent = pc || 0;
-            } catch (e) { console.error(e); }
-        }
-
-        async function loadAdminJournals() {
-            try {
-                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
-                if (error) throw error;
-                const c = document.getElementById('adminJournalList');
-                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Authors</th><th>Actions</th></tr></thead><tbody>${data.map(j => `<tr><td>${j.title}</td><td>${j.authors}</td><td><div class="actions"><button class="delete-btn" onclick="deleteJournal('${j.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
-            } catch (e) { document.getElementById('adminJournalList').innerHTML = '<p style="color:red;">Error</p>'; }
-        }
-
-        async function loadAdminFaculty() {
-            try {
-                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
-                if (error) throw error;
-                const c = document.getElementById('adminFacultyList');
-                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Name</th><th>Title</th><th>Actions</th></tr></thead><tbody>${data.map(f => `<tr><td>${f.name}</td><td>${f.title}</td><td><div class="actions"><button class="delete-btn" onclick="deleteFaculty('${f.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
-            } catch (e) { document.getElementById('adminFacultyList').innerHTML = '<p style="color:red;">Error</p>'; }
-        }
-
-        async function loadAdminNews() {
-            try {
-                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
-                if (error) throw error;
-                const c = document.getElementById('adminNewsList');
-                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Type</th><th>Actions</th></tr></thead><tbody>${data.map(n => `<tr><td>${n.title}</td><td>${n.type}</td><td><div class="actions"><button class="delete-btn" onclick="deleteNews('${n.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
-            } catch (e) { document.getElementById('adminNewsList').innerHTML = '<p style="color:red;">Error</p>'; }
-        }
-
-        async function loadAdminProgrammes() {
-            try {
-                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
-                if (error) throw error;
-                const c = document.getElementById('adminProgrammesList');
-                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Level</th><th>Actions</th></tr></thead><tbody>${data.map(p => `<tr><td>${p.title}</td><td>${p.level}</td><td><div class="actions"><button class="delete-btn" onclick="deleteProgramme('${p.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
-            } catch (e) { document.getElementById('adminProgrammesList').innerHTML = '<p style="color:red;">Error</p>'; }
-        }
-
-        // ─── ADMIN CRUD ──────────────────────────────────────
-        async function adminSaveJournal(e) {
-            e.preventDefault();
-            try {
-                const title = document.getElementById('ajTitle').value;
-                const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                const { error } = await supabase.from('journals').insert({
-                    title,
-                    slug,
-                    authors: document.getElementById('ajAuthors').value,
-                    abstract: document.getElementById('ajAbstract').value,
-                    volume: parseInt(document.getElementById('ajVolume').value),
-                    year: parseInt(document.getElementById('ajYear').value),
-                    published_date: document.getElementById('ajDate').value,
-                    tags: document.getElementById('ajTags').value.split(',').map(t => t.trim()).filter(Boolean)
-                });
-                if (error) throw error;
-                showToast('Journal created!', 'success');
-                document.getElementById('adminJournalForm').querySelector('form').reset();
-                hideAdminForm('journal');
-                loadAdminJournals();
-                refreshAllData();
-            } catch (e) { showToast(e.message || 'Error', 'error'); }
-        }
-
-        async function deleteJournal(id) {
-            if (!confirm('Delete?')) return;
-            try {
-                await supabase.from('journals').delete().eq('id', id);
-                showToast('Deleted', 'success');
-                loadAdminJournals();
-                refreshAllData();
-            } catch (e) { showToast('Error deleting', 'error'); }
-        }
-
-        async function adminSaveFaculty(e) {
-            e.preventDefault();
-            try {
-                const { error } = await supabase.from('faculty').insert({
-                    name: document.getElementById('afName').value,
-                    title: document.getElementById('afTitle').value,
-                    specialization: document.getElementById('afSpecialization').value,
-                    photo_url: document.getElementById('afPhoto').value || null,
-                    display_order: 0
-                });
-                if (error) throw error;
-                showToast('Faculty added!', 'success');
-                document.getElementById('adminFacultyForm').querySelector('form').reset();
-                hideAdminForm('faculty');
-                loadAdminFaculty();
-                refreshAllData();
-            } catch (e) { showToast(e.message || 'Error', 'error'); }
-        }
-
-        async function deleteFaculty(id) {
-            if (!confirm('Delete?')) return;
-            try {
-                await supabase.from('faculty').delete().eq('id', id);
-                showToast('Deleted', 'success');
-                loadAdminFaculty();
-                refreshAllData();
-            } catch (e) { showToast('Error deleting', 'error'); }
-        }
-
-        async function adminSaveNews(e) {
-            e.preventDefault();
-            try {
-                const title = document.getElementById('anTitle').value;
-                const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-                const { error } = await supabase.from('news_events').insert({
-                    title,
-                    slug,
-                    type: document.getElementById('anType').value,
-                    date: document.getElementById('anDate').value,
-                    description: document.getElementById('anDescription').value
-                });
-                if (error) throw error;
-                showToast('News created!', 'success');
-                document.getElementById('adminNewsForm').querySelector('form').reset();
-                hideAdminForm('news');
-                loadAdminNews();
-                refreshAllData();
-            } catch (e) { showToast(e.message || 'Error', 'error'); }
-        }
-
-        async function deleteNews(id) {
-            if (!confirm('Delete?')) return;
-            try {
-                await supabase.from('news_events').delete().eq('id', id);
-                showToast('Deleted', 'success');
-                loadAdminNews();
-                refreshAllData();
-            } catch (e) { showToast('Error deleting', 'error'); }
-        }
-
-        async function adminSaveProgramme(e) {
-            e.preventDefault();
-            try {
-                const { error } = await supabase.from('programmes').insert({
-                    title: document.getElementById('apTitle').value,
-                    level: document.getElementById('apLevel').value,
-                    description: document.getElementById('apDescription').value,
-                    duration: document.getElementById('apDuration').value || null
-                });
-                if (error) throw error;
-                showToast('Programme created!', 'success');
-                document.getElementById('adminProgrammeForm').querySelector('form').reset();
-                hideAdminForm('programme');
-                loadAdminProgrammes();
-                refreshAllData();
-            } catch (e) { showToast(e.message || 'Error', 'error'); }
-        }
-
-        async function deleteProgramme(id) {
-            if (!confirm('Delete?')) return;
-            try {
-                await supabase.from('programmes').delete().eq('id', id);
-                showToast('Deleted', 'success');
-                loadAdminProgrammes();
-                refreshAllData();
-            } catch (e) { showToast('Error deleting', 'error'); }
-        }
-
-        // ─── START ──────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
