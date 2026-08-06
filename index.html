@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department of Sociology — Kaduna State University</title>
+    <title>Department of Sociology — KASU</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
         :root {
             --kasu-green: #1A4731;
             --kasu-gold: #C8941A;
-            --kasu-green-mid: #2D6E4A;
             --kasu-green-light: #E8F2EC;
             --text-primary: #1A1A1A;
             --text-secondary: #4A4A4A;
@@ -24,124 +23,8 @@
             --bg-cream: #FAFAF7;
         }
         body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-white); line-height: 1.7; }
-        a { text-decoration: none; color: inherit; cursor: pointer; }
-        button { cursor: pointer; }
-        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .section-padding { padding: 5rem 0; }
-        .hidden { display: none !important; }
-
-        /* ── TOP BAR ── */
-        .top-bar {
-            background: var(--kasu-green);
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-            padding: 6px 0;
-        }
-        .top-bar .inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .top-bar a { color: rgba(255,255,255,0.8); }
-        .top-bar a:hover { color: var(--kasu-gold); }
-        .top-bar .links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-
-        /* ── HEADER ── */
-        header {
-            background: var(--bg-white);
-            border-bottom: 2px solid var(--kasu-green);
-            position: sticky; top: 0; z-index: 100;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 72px;
-        }
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            cursor: pointer;
-        }
-        .brand-logo {
-            width: 50px; height: 50px;
-            background: var(--kasu-green);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 18px; font-weight: 700;
-            color: var(--kasu-gold);
-        }
-        .brand-text .dept {
-            font-family: 'Playfair Display', serif;
-            font-size: 15px; font-weight: 600;
-            color: var(--kasu-green);
-            display: block;
-        }
-        .brand-text .uni {
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 0.25rem;
-            align-items: center;
-        }
-        nav ul li a {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            display: block;
-            cursor: pointer;
-        }
-        nav ul li a:hover { background: var(--kasu-green-light); color: var(--kasu-green); }
-        nav ul li a.active { color: var(--kasu-green); background: var(--kasu-green-light); }
-        .nav-btn { background: var(--kasu-green) !important; color: white !important; border-radius: 6px !important; }
-        .nav-btn:hover { background: var(--kasu-green-mid) !important; }
-        .mobile-toggle { display: none; background: none; border: none; font-size: 28px; cursor: pointer; padding: 8px; }
-
-        /* ── HERO ── */
-        .hero {
-            background: var(--kasu-green);
-            padding: 5rem 2rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-        }
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.2;
-            margin-bottom: 1.25rem;
-        }
-        .hero h1 em { font-style: italic; color: var(--kasu-gold); }
-        .hero p { font-size: 17px; color: rgba(255,255,255,0.75); max-width: 520px; margin-bottom: 2rem; }
+        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .section-padding { padding: 4rem 0; }
         .btn-primary {
             background: var(--kasu-gold);
             color: var(--kasu-green);
@@ -159,38 +42,162 @@
         .btn-outline {
             border: 1px solid rgba(255,255,255,0.4);
             color: rgba(255,255,255,0.9);
-            font-size: 14px; font-weight: 500;
+            font-size: 14px;
+            font-weight: 500;
             padding: 12px 24px;
             border-radius: 6px;
-            transition: all 0.2s;
             display: inline-block;
             background: transparent;
             cursor: pointer;
         }
         .btn-outline:hover { background: rgba(255,255,255,0.1); }
+        .loading { text-align: center; padding: 3rem; color: var(--text-muted); }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--kasu-gold);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            z-index: 9999;
+            max-width: 400px;
+        }
+        .toast-success { background: #22c55e; }
+        .toast-error { background: #ef4444; }
+        .toast-info { background: #3b82f6; }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            background: var(--kasu-green);
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            padding: 6px 0;
+        }
+        .top-bar .inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .top-bar a { color: rgba(255,255,255,0.8); }
+        .top-bar a:hover { color: var(--kasu-gold); }
+        .top-bar .links { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* ── HEADER ── */
+        header {
+            background: var(--bg-white);
+            border-bottom: 2px solid var(--kasu-green);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 65px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .brand-logo {
+            width: 40px; height: 40px;
+            background: var(--kasu-green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px; font-weight: 700;
+            color: var(--kasu-gold);
+        }
+        .brand-text .dept {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px; font-weight: 600;
+            color: var(--kasu-green);
+        }
+        .brand-text .uni { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+        }
+        nav ul li a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: block;
+            cursor: pointer;
+        }
+        nav ul li a:hover { background: var(--kasu-green-light); color: var(--kasu-green); }
+        nav ul li a.active { color: var(--kasu-green); background: var(--kasu-green-light); }
+        .nav-btn { background: var(--kasu-green) !important; color: white !important; border-radius: 6px !important; }
+        .mobile-toggle { display: none; background: none; border: none; font-size: 28px; cursor: pointer; padding: 8px; }
+
+        /* ── HERO ── */
+        .hero {
+            background: var(--kasu-green);
+            padding: 4rem 1.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-inner { max-width: 1200px; margin: 0 auto; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .hero h1 em { font-style: italic; color: var(--kasu-gold); }
+        .hero p { font-size: 16px; color: rgba(255,255,255,0.75); max-width: 520px; margin-bottom: 1.5rem; }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
         .hero-stats {
             background: rgba(255,255,255,0.07);
             border: 1px solid rgba(255,255,255,0.15);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
+            margin-top: 2rem;
+            max-width: 500px;
         }
         .stat-item { text-align: center; }
         .stat-item .num {
             font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--kasu-gold);
-            line-height: 1;
             display: block;
         }
-        .stat-item .label { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 0.04em; margin-top: 4px; display: block; }
+        .stat-item .label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
         .stat-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); grid-column: 1 / -1; margin: 0; }
 
         /* ── JOURNAL CARDS ── */
-        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .journal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .journal-card {
             background: var(--bg-white);
             border: 1px solid var(--border);
@@ -199,17 +206,16 @@
             transition: all 0.25s;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
         }
         .journal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--kasu-green); }
-        .journal-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: var(--kasu-green-mid); }
-        .journal-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .journal-vol { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--kasu-green); background: var(--kasu-green-light); padding: 3px 10px; border-radius: 100px; }
+        .journal-card { position: relative; overflow: hidden; }
+        .journal-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        .journal-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+        .journal-vol { font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--kasu-green); background: var(--kasu-green-light); padding: 3px 10px; border-radius: 100px; }
         .journal-year { font-size: 12px; color: var(--text-muted); }
-        .journal-card h3 { font-family: 'IBM Plex Serif', serif; font-size: 16px; font-weight: 600; line-height: 1.45; margin-bottom: 0.5rem; flex-grow: 1; }
+        .journal-card h3 { font-family: 'IBM Plex Serif', serif; font-size: 16px; font-weight: 600; margin-bottom: 0.5rem; flex-grow: 1; }
         .journal-card .authors { font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
-        .journal-abstract { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .journal-abstract { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .journal-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: auto; }
         .badge-area { display: flex; gap: 6px; flex-wrap: wrap; }
         .badge { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-weight: 500; }
@@ -217,12 +223,11 @@
         .badge-policy { background: #FFF3E0; color: #E65100; }
         .badge-gender { background: #FCE4EC; color: #880E4F; }
         .badge-urban { background: #E0F2F1; color: #004D40; }
-        .badge-dev { background: #F3E5F5; color: #4A148C; }
-        .read-btn { font-size: 13px; font-weight: 500; color: var(--kasu-green); cursor: pointer; background: none; border: none; display: flex; align-items: center; gap: 4px; transition: gap 0.2s; padding: 0; }
-        .read-btn:hover { gap: 8px; }
+        .read-btn { font-size: 13px; font-weight: 500; color: var(--kasu-green); cursor: pointer; background: none; border: none; padding: 0; }
+        .read-btn:hover { text-decoration: underline; }
 
         /* ── FACULTY ── */
-        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; }
         .faculty-card {
             background: var(--bg-white);
             border: 1px solid var(--border);
@@ -232,46 +237,43 @@
             text-align: center;
         }
         .faculty-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-3px); }
-        .faculty-photo { height: 120px; background: var(--kasu-green); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--kasu-gold); }
+        .faculty-photo { height: 100px; background: var(--kasu-green); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--kasu-gold); }
         .faculty-photo img { width: 100%; height: 100%; object-fit: cover; }
         .faculty-info { padding: 1rem; }
-        .faculty-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.25rem; }
-        .faculty-info .title { font-size: 12.5px; color: var(--kasu-green); font-weight: 500; margin-bottom: 0.5rem; }
-        .faculty-info .specialization { font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+        .faculty-info h4 { font-size: 14px; font-weight: 600; }
+        .faculty-info .title { font-size: 12px; color: var(--kasu-green); font-weight: 500; }
+        .faculty-info .specialization { font-size: 12px; color: var(--text-muted); font-style: italic; }
 
         /* ── NEWS ── */
-        .news-list { display: flex; flex-direction: column; gap: 1.25rem; max-width: 800px; margin: 0 auto; }
+        .news-list { display: flex; flex-direction: column; gap: 1rem; max-width: 800px; margin: 0 auto; }
         .news-item {
             display: flex;
             gap: 1rem;
-            padding: 1.25rem;
+            padding: 1rem;
             background: var(--bg-white);
             border-radius: 8px;
             border: 1px solid var(--border);
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .news-item:hover { border-color: var(--kasu-green); box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
         .news-date-block {
             background: var(--kasu-green);
             color: #fff;
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: center;
-            min-width: 50px;
+            min-width: 45px;
             flex-shrink: 0;
             height: fit-content;
         }
-        .news-date-block .day { font-size: 1.4rem; font-weight: 700; line-height: 1; display: block; font-family: 'Playfair Display', serif; }
-        .news-date-block .month { font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.8; }
-        .news-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 0.35rem; line-height: 1.4; }
-        .news-item p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
-        .news-type { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; display: block; }
+        .news-date-block .day { font-size: 1.2rem; font-weight: 700; display: block; font-family: 'Playfair Display', serif; }
+        .news-date-block .month { font-size: 10px; text-transform: uppercase; opacity: 0.8; }
+        .news-item h4 { font-size: 14px; font-weight: 600; }
+        .news-item p { font-size: 13px; color: var(--text-secondary); }
+        .news-type { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; display: block; }
         .type-event { color: var(--kasu-gold); }
         .type-news { color: var(--kasu-green); }
-        .type-call { color: #C62828; }
 
         /* ── PROGRAMMES ── */
-        .programme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .programme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
         .programme-card {
             border-left: 4px solid #3b82f6;
             background: white;
@@ -281,100 +283,110 @@
         }
         .programme-card .level { font-size: 12px; font-weight: 600; background: #f5f5f5; padding: 2px 10px; border-radius: 100px; }
 
-        /* ── SECTION ── */
-        .section-alt { background: var(--bg-cream); }
-        .section-dark { background: var(--kasu-green); }
-        .section-header { margin-bottom: 3rem; }
-        .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kasu-gold); display: block; margin-bottom: 0.5rem; }
-        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; color: var(--text-primary); line-height: 1.25; }
-        .section-header h2::after { content: ''; display: block; width: 48px; height: 3px; background: var(--kasu-gold); margin-top: 12px; border-radius: 2px; }
-        .section-header p { font-size: 16px; color: var(--text-secondary); margin-top: 0.75rem; max-width: 600px; }
-
-        .loading { text-align: center; padding: 3rem; color: var(--text-muted); }
-        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--kasu-gold); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .page-content { display: none; }
-        .page-content.active { display: block; }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            border-radius: 8px;
-            color: white;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-            max-width: 400px;
+        /* ── SECTION HEADER ── */
+        .section-header { margin-bottom: 2rem; }
+        .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kasu-gold); display: block; }
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--text-primary);
         }
-        .toast-success { background: #22c55e; }
-        .toast-error { background: #ef4444; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .section-header h2::after { content: ''; display: block; width: 48px; height: 3px; background: var(--kasu-gold); margin-top: 8px; border-radius: 2px; }
+        .section-alt { background: var(--bg-cream); }
 
-        /* Admin Styles */
+        /* ── ADMIN LOGIN ── */
         .admin-login-container { min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg-cream); }
-        .admin-login-box { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
-        .admin-login-box h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--kasu-green); margin-bottom: 1.5rem; text-align: center; }
+        .admin-login-box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
+        .admin-login-box h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--kasu-green); margin-bottom: 1.5rem; text-align: center; }
         .admin-login-box .form-group { margin-bottom: 1rem; }
         .admin-login-box label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
         .admin-login-box input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
-        .admin-login-box .btn-primary { width: 100%; text-align: center; }
 
-        .admin-layout { display: flex; min-height: 100vh; }
-        .admin-sidebar { width: 250px; background: var(--kasu-green); color: white; padding: 1.5rem 0; flex-shrink: 0; height: 100vh; overflow-y: auto; }
-        .admin-sidebar .logo { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; }
+        /* ── ADMIN DASHBOARD ── */
+        .admin-layout { display: flex; min-height: 100vh; flex-wrap: wrap; }
+        .admin-sidebar {
+            width: 220px;
+            background: var(--kasu-green);
+            color: white;
+            padding: 1rem 0;
+            flex-shrink: 0;
+            min-height: 100vh;
+        }
+        .admin-sidebar .logo { padding: 0 1rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
         .admin-sidebar .logo span { color: var(--kasu-gold); }
-        .admin-sidebar nav a { display: flex; align-items: center; gap: 12px; padding: 10px 1.5rem; color: rgba(255,255,255,0.7); transition: all 0.2s; cursor: pointer; font-size: 14px; border: none; background: none; width: 100%; text-align: left; }
+        .admin-sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 1rem;
+            color: rgba(255,255,255,0.7);
+            transition: all 0.2s;
+            cursor: pointer;
+            font-size: 13px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
         .admin-sidebar nav a:hover, .admin-sidebar nav a.active { background: rgba(255,255,255,0.1); color: white; }
-        .admin-sidebar .logout-btn { margin-top: 2rem; padding: 10px 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 12px; background: none; border: none; width: 100%; text-align: left; }
+        .admin-sidebar .logout-btn {
+            margin-top: 2rem;
+            padding: 10px 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            font-size: 13px;
+            background: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
+            width: 100%;
+            text-align: left;
+        }
         .admin-sidebar .logout-btn:hover { color: white; }
-        .admin-content { flex: 1; padding: 2rem; background: #f5f5f5; overflow: auto; }
-        .admin-content h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--kasu-green); margin-bottom: 1.5rem; }
-        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .admin-stat-card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .admin-stat-card h3 { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-        .admin-stat-card .number { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--kasu-green); }
+        .admin-content { flex: 1; padding: 1.5rem; background: #f5f5f5; overflow: auto; }
+        .admin-content h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--kasu-green); margin-bottom: 1rem; }
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .admin-stat-card { background: white; padding: 1.2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .admin-stat-card h3 { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .admin-stat-card .number { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--kasu-green); }
         .admin-table { background: white; border-radius: 10px; overflow: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .admin-table table { width: 100%; border-collapse: collapse; min-width: 500px; }
-        .admin-table th { background: #f9f9f9; text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
-        .admin-table td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 14px; }
-        .admin-table .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-        .admin-table .actions button { padding: 4px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .admin-table .actions .edit-btn { background: #e8f2ec; color: var(--kasu-green); }
+        .admin-table table { width: 100%; border-collapse: collapse; min-width: 400px; font-size: 13px; }
+        .admin-table th { background: #f9f9f9; text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+        .admin-table td { padding: 10px 14px; border-top: 1px solid var(--border); }
+        .admin-table .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+        .admin-table .actions button { padding: 4px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; }
         .admin-table .actions .delete-btn { background: #fee2e2; color: #dc2626; }
-        .admin-form { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); max-width: 600px; }
+
+        .admin-form { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); max-width: 500px; }
         .admin-form .form-group { margin-bottom: 1rem; }
         .admin-form label { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
-        .admin-form input, .admin-form textarea, .admin-form select { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
-        .admin-form textarea { min-height: 100px; resize: vertical; }
-        .admin-form .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .admin-form input, .admin-form textarea, .admin-form select { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; }
+        .admin-form textarea { min-height: 80px; resize: vertical; }
+        .admin-form .form-actions { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
 
-        footer { background: #111; color: rgba(255,255,255,0.7); padding: 4rem 2rem 2rem; }
+        /* ── FOOTER ── */
+        footer { background: #111; color: rgba(255,255,255,0.7); padding: 3rem 1.5rem 1.5rem; }
         .footer-inner { max-width: 1200px; margin: 0 auto; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-        .footer-brand p { font-size: 14px; line-height: 1.7; margin: 1rem 0; max-width: 300px; }
-        .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--kasu-gold); margin-bottom: 1rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .footer-brand p { font-size: 14px; line-height: 1.7; margin: 0.5rem 0; max-width: 300px; }
+        .footer-col h5 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--kasu-gold); margin-bottom: 0.8rem; }
         .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 0.6rem; }
-        .footer-col ul li a { color: rgba(255,255,255,0.6); font-size: 14px; transition: color 0.2s; cursor: pointer; }
+        .footer-col ul li { margin-bottom: 0.5rem; }
+        .footer-col ul li a { color: rgba(255,255,255,0.6); font-size: 13px; cursor: pointer; }
         .footer-col ul li a:hover { color: white; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 13px; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 12px; flex-wrap: wrap; gap: 0.5rem; }
 
-        @media (max-width: 992px) {
-            .hero-inner { grid-template-columns: 1fr; }
-            .hero-stats { display: none; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .mobile-toggle { display: block; }
-            nav ul { display: none; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: white; padding: 1rem; border-bottom: 2px solid var(--kasu-green); box-shadow: var(--shadow); z-index: 99; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; right: 0; background: white; padding: 1rem; border-bottom: 2px solid var(--kasu-green); z-index: 99; }
             nav ul.open { display: flex; }
-            .admin-sidebar { width: 100%; height: auto; position: relative; }
+            .admin-sidebar { width: 100%; min-height: auto; }
             .admin-layout { flex-direction: column; }
-            .admin-content { padding: 1rem; }
-            .container-custom { padding: 0 1rem; }
             .footer-grid { grid-template-columns: 1fr; }
+            .hero-stats { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -383,11 +395,10 @@
     <!-- ═══════════ TOP BAR ═══════════ -->
     <div class="top-bar">
         <div class="inner">
-            <span>📍 Faculty of Social Sciences, Kaduna State University — Kaduna, Nigeria</span>
+            <span>📍 KASU Sociology — Kaduna, Nigeria</span>
             <div class="links">
-                <a href="#">KASU Main Site</a>
+                <a href="#">KASU Main</a>
                 <a href="#">E-Library</a>
-                <a href="#">Contact</a>
                 <a id="adminLink" href="#" style="color: var(--kasu-gold); font-weight: 600;">Admin</a>
             </div>
         </div>
@@ -399,7 +410,7 @@
             <div class="brand" onclick="showPage('home')">
                 <div class="brand-logo">SΩC</div>
                 <div class="brand-text">
-                    <span class="dept">Sociology Department</span>
+                    <span class="dept">Sociology Dept.</span>
                     <span class="uni">Kaduna State University</span>
                 </div>
             </div>
@@ -409,9 +420,9 @@
                     <li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
                     <li><a onclick="showPage('journals')" data-page="journals">Journals</a></li>
                     <li><a onclick="showPage('faculty')" data-page="faculty">Faculty</a></li>
-                    <li><a onclick="showPage('news')" data-page="news">News & Events</a></li>
+                    <li><a onclick="showPage('news')" data-page="news">News</a></li>
                     <li><a onclick="showPage('programmes')" data-page="programmes">Programmes</a></li>
-                    <li><a onclick="showPage('submit')" class="nav-btn" data-page="submit">Submit Paper</a></li>
+                    <li><a onclick="showPage('submit')" class="nav-btn" data-page="submit">Submit</a></li>
                 </ul>
             </nav>
         </div>
@@ -423,18 +434,18 @@
             <div class="hero-inner">
                 <div class="hero-content">
                     <h1>Understanding Society,<br><em>Shaping the Future</em></h1>
-                    <p>The Department of Sociology at Kaduna State University publishes peer-reviewed research, drives social inquiry, and prepares the next generation of sociologists for Nigeria and beyond.</p>
+                    <p>The Department of Sociology at Kaduna State University publishes peer-reviewed research, drives social inquiry, and prepares the next generation of sociologists.</p>
                     <div class="hero-actions">
-                        <button class="btn-primary" onclick="showPage('journals')">Browse Our Journals →</button>
-                        <button class="btn-outline" onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">About the Department</button>
+                        <button class="btn-primary" onclick="showPage('journals')">Browse Journals →</button>
+                        <button class="btn-outline" onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">About Us</button>
                     </div>
                 </div>
                 <div class="hero-stats" id="heroStats">
-                    <div class="stat-item"><span class="num" id="statYears">12+</span><span class="label">Years of Publication</span></div>
-                    <div class="stat-item"><span class="num" id="statAreas">6</span><span class="label">Active Research Areas</span></div>
+                    <div class="stat-item"><span class="num" id="statYears">12+</span><span class="label">Years</span></div>
+                    <div class="stat-item"><span class="num" id="statAreas">6</span><span class="label">Research Areas</span></div>
                     <hr class="stat-divider">
-                    <div class="stat-item"><span class="num" id="statArticles">200+</span><span class="label">Published Articles</span></div>
-                    <div class="stat-item"><span class="num" id="statFaculty">48</span><span class="label">Faculty & Associates</span></div>
+                    <div class="stat-item"><span class="num" id="statArticles">200+</span><span class="label">Articles</span></div>
+                    <div class="stat-item"><span class="num" id="statFaculty">48</span><span class="label">Faculty</span></div>
                 </div>
             </div>
         </section>
@@ -444,13 +455,12 @@
                 <div class="section-header">
                     <span class="section-eyebrow">Research & Publications</span>
                     <h2>Featured Journal Articles</h2>
-                    <p>Selected peer-reviewed articles published by faculty, researchers, and contributors.</p>
                 </div>
                 <div class="journal-grid" id="featuredJournals">
                     <div class="loading"><div class="loading-spinner"></div>Loading articles...</div>
                 </div>
-                <div style="text-align:center; margin-top:2.5rem;">
-                    <button class="btn-primary" onclick="showPage('journals')">View All Publications →</button>
+                <div style="text-align:center; margin-top:2rem;">
+                    <button class="btn-primary" onclick="showPage('journals')">View All →</button>
                 </div>
             </div>
         </section>
@@ -458,7 +468,7 @@
         <section class="section-padding" id="about-section">
             <div class="container-custom">
                 <div class="section-header">
-                    <span class="section-eyebrow">About the Department</span>
+                    <span class="section-eyebrow">About Us</span>
                     <h2>Rooted in Kaduna. Engaged with the World.</h2>
                     <p>The Department of Sociology at Kaduna State University is one of the foremost centres for sociological research and teaching in North-Central Nigeria.</p>
                 </div>
@@ -470,13 +480,12 @@
                 <div class="section-header">
                     <span class="section-eyebrow">Our People</span>
                     <h2>Faculty & Staff</h2>
-                    <p>Meet the scholars leading research and teaching at the Department of Sociology.</p>
                 </div>
                 <div class="faculty-grid" id="homeFacultyGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading faculty...</div>
                 </div>
                 <div style="text-align:center; margin-top:2rem;">
-                    <button class="btn-primary" onclick="showPage('faculty')">View All Faculty →</button>
+                    <button class="btn-primary" onclick="showPage('faculty')">View All →</button>
                 </div>
             </div>
         </section>
@@ -486,7 +495,7 @@
     <div id="page-journals" class="page-content">
         <section class="section-padding section-alt">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1.5rem;">Research Journals</h1>
+                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Research Journals</h1>
                 <div class="journal-grid" id="allJournalsGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading journals...</div>
                 </div>
@@ -498,7 +507,7 @@
     <div id="page-faculty" class="page-content">
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1.5rem;">Our Faculty</h1>
+                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Our Faculty</h1>
                 <div class="faculty-grid" id="allFacultyGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading faculty...</div>
                 </div>
@@ -510,7 +519,7 @@
     <div id="page-news" class="page-content">
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1.5rem;">News & Events</h1>
+                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">News & Events</h1>
                 <div class="news-list" id="allNewsList">
                     <div class="loading"><div class="loading-spinner"></div>Loading news...</div>
                 </div>
@@ -522,7 +531,7 @@
     <div id="page-programmes" class="page-content">
         <section class="section-padding">
             <div class="container-custom">
-                <h1 style="font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:1.5rem;">Academic Programmes</h1>
+                <h1 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;">Academic Programmes</h1>
                 <div class="programme-grid" id="programmesGrid">
                     <div class="loading"><div class="loading-spinner"></div>Loading programmes...</div>
                 </div>
@@ -533,27 +542,27 @@
     <!-- ═══════════ PAGE: SUBMIT ═══════════ -->
     <div id="page-submit" class="page-content">
         <section class="section-padding section-alt">
-            <div class="container-custom" style="max-width:800px;">
+            <div class="container-custom" style="max-width:600px;">
                 <div style="background:white;border-radius:12px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
-                    <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1.5rem;">Submit Your Research</h2>
+                    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1rem;">Submit Your Research</h2>
                     <form id="submissionForm" onsubmit="submitPaper(event)">
                         <div class="form-group" style="margin-bottom:1rem;">
                             <label>Author Name(s) *</label>
-                            <input type="text" id="subAuthor" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
+                            <input type="text" id="subAuthor" required>
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Email Address *</label>
-                            <input type="email" id="subEmail" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
+                            <label>Email *</label>
+                            <input type="email" id="subEmail" required>
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
-                            <label>Manuscript Title *</label>
-                            <input type="text" id="subTitle" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;">
+                            <label>Title *</label>
+                            <input type="text" id="subTitle" required>
                         </div>
                         <div class="form-group" style="margin-bottom:1rem;">
                             <label>Abstract *</label>
-                            <textarea id="subAbstract" rows="4" required style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;resize:vertical;"></textarea>
+                            <textarea id="subAbstract" rows="4" required></textarea>
                         </div>
-                        <button type="submit" class="btn-primary" style="width:100%;text-align:center;">Submit Manuscript →</button>
+                        <button type="submit" class="btn-primary" style="width:100%;">Submit →</button>
                     </form>
                 </div>
             </div>
@@ -575,7 +584,7 @@
                         <input type="password" id="adminPassword" placeholder="••••••••" required>
                     </div>
                     <div id="adminLoginError" style="color:#dc2626;font-size:14px;margin-bottom:1rem;display:none;"></div>
-                    <button type="submit" class="btn-primary">Login</button>
+                    <button type="submit" class="btn-primary" style="width:100%;">Login</button>
                 </form>
             </div>
         </div>
@@ -592,7 +601,6 @@
                     <a onclick="showAdminPage('faculty')" data-admin="faculty">👨‍🏫 Faculty</a>
                     <a onclick="showAdminPage('news')" data-admin="news">📰 News</a>
                     <a onclick="showAdminPage('programmes')" data-admin="programmes">🎓 Programmes</a>
-                    <a onclick="showAdminPage('settings')" data-admin="settings">⚙️ Settings</a>
                 </nav>
                 <button class="logout-btn" onclick="adminLogout()">🚪 Logout</button>
             </div>
@@ -607,27 +615,24 @@
                     </div>
                 </div>
                 <div id="admin-journals" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                         <h1>Manage Journals</h1>
-                        <button class="btn-primary" onclick="showAdminForm('journal')">+ New Article</button>
+                        <button class="btn-primary" onclick="showAdminForm('journal')">+ New</button>
                     </div>
-                    <div id="adminJournalList" class="admin-table">
-                        <div class="loading"><div class="loading-spinner"></div>Loading...</div>
-                    </div>
-                    <div id="adminJournalForm" style="display:none;margin-top:2rem;">
+                    <div id="adminJournalList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
+                    <div id="adminJournalForm" style="display:none;margin-top:1.5rem;">
                         <div class="admin-form">
-                            <h2>Add Journal Article</h2>
+                            <h2>Add Journal</h2>
                             <form onsubmit="adminSaveJournal(event)">
                                 <div class="form-group"><label>Title *</label><input type="text" id="ajTitle" required></div>
                                 <div class="form-group"><label>Authors *</label><input type="text" id="ajAuthors" required></div>
-                                <div class="form-group"><label>Abstract *</label><textarea id="ajAbstract" rows="4" required></textarea></div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                <div class="form-group"><label>Abstract *</label><textarea id="ajAbstract" rows="3" required></textarea></div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
                                     <div class="form-group"><label>Volume *</label><input type="number" id="ajVolume" required></div>
                                     <div class="form-group"><label>Year *</label><input type="number" id="ajYear" required></div>
                                 </div>
-                                <div class="form-group"><label>Published Date *</label><input type="date" id="ajDate" required></div>
-                                <div class="form-group"><label>Tags</label><input type="text" id="ajTags" placeholder="Urban Studies, Policy"></div>
-                                <div class="form-group"><label>PDF URL</label><input type="url" id="ajPdfUrl" placeholder="https://example.com/paper.pdf"></div>
+                                <div class="form-group"><label>Date *</label><input type="date" id="ajDate" required></div>
+                                <div class="form-group"><label>Tags</label><input type="text" id="ajTags" placeholder="Urban, Policy"></div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('journal')">Cancel</button>
@@ -637,20 +642,19 @@
                     </div>
                 </div>
                 <div id="admin-faculty" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                         <h1>Manage Faculty</h1>
-                        <button class="btn-primary" onclick="showAdminForm('faculty')">+ Add Faculty</button>
+                        <button class="btn-primary" onclick="showAdminForm('faculty')">+ New</button>
                     </div>
                     <div id="adminFacultyList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminFacultyForm" style="display:none;margin-top:2rem;">
+                    <div id="adminFacultyForm" style="display:none;margin-top:1.5rem;">
                         <div class="admin-form">
-                            <h2>Add Faculty Member</h2>
+                            <h2>Add Faculty</h2>
                             <form onsubmit="adminSaveFaculty(event)">
                                 <div class="form-group"><label>Name *</label><input type="text" id="afName" required></div>
                                 <div class="form-group"><label>Title *</label><input type="text" id="afTitle" required></div>
                                 <div class="form-group"><label>Specialization *</label><input type="text" id="afSpecialization" required></div>
-                                <div class="form-group"><label>Email</label><input type="email" id="afEmail"></div>
-                                <div class="form-group"><label>Photo URL</label><input type="url" id="afPhoto" placeholder="https://example.com/photo.jpg"></div>
+                                <div class="form-group"><label>Photo URL</label><input type="url" id="afPhoto"></div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('faculty')">Cancel</button>
@@ -660,14 +664,14 @@
                     </div>
                 </div>
                 <div id="admin-news" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                         <h1>Manage News</h1>
-                        <button class="btn-primary" onclick="showAdminForm('news')">+ Add News</button>
+                        <button class="btn-primary" onclick="showAdminForm('news')">+ New</button>
                     </div>
                     <div id="adminNewsList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminNewsForm" style="display:none;margin-top:2rem;">
+                    <div id="adminNewsForm" style="display:none;margin-top:1.5rem;">
                         <div class="admin-form">
-                            <h2>Add News/Event</h2>
+                            <h2>Add News</h2>
                             <form onsubmit="adminSaveNews(event)">
                                 <div class="form-group"><label>Title *</label><input type="text" id="anTitle" required></div>
                                 <div class="form-group"><label>Type *</label>
@@ -679,7 +683,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group"><label>Date *</label><input type="date" id="anDate" required></div>
-                                <div class="form-group"><label>Description *</label><textarea id="anDescription" rows="4" required></textarea></div>
+                                <div class="form-group"><label>Description *</label><textarea id="anDescription" rows="3" required></textarea></div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('news')">Cancel</button>
@@ -689,12 +693,12 @@
                     </div>
                 </div>
                 <div id="admin-programmes" style="display:none;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                         <h1>Manage Programmes</h1>
-                        <button class="btn-primary" onclick="showAdminForm('programme')">+ Add Programme</button>
+                        <button class="btn-primary" onclick="showAdminForm('programme')">+ New</button>
                     </div>
                     <div id="adminProgrammesList" class="admin-table"><div class="loading"><div class="loading-spinner"></div>Loading...</div></div>
-                    <div id="adminProgrammeForm" style="display:none;margin-top:2rem;">
+                    <div id="adminProgrammeForm" style="display:none;margin-top:1.5rem;">
                         <div class="admin-form">
                             <h2>Add Programme</h2>
                             <form onsubmit="adminSaveProgramme(event)">
@@ -706,24 +710,13 @@
                                         <option value="PhD">PhD</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>Description *</label><textarea id="apDescription" rows="4" required></textarea></div>
-                                <div class="form-group"><label>Duration</label><input type="text" id="apDuration" placeholder="4 years"></div>
+                                <div class="form-group"><label>Description *</label><textarea id="apDescription" rows="3" required></textarea></div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline" style="border-color:var(--border);color:var(--text-secondary);" onclick="hideAdminForm('programme')">Cancel</button>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-                <div id="admin-settings" style="display:none;">
-                    <h1>Settings</h1>
-                    <div class="admin-form" style="max-width:100%;">
-                        <form onsubmit="adminSaveSettings(event)">
-                            <div class="form-group"><label>Site Name</label><input type="text" id="setSiteName" value="Department of Sociology, Kaduna State University"></div>
-                            <div class="form-group"><label>Tagline</label><input type="text" id="setTagline" value="Advancing Social Science in Northern Nigeria"></div>
-                            <div class="form-actions"><button type="submit" class="btn-primary">Save Settings</button></div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -735,8 +728,8 @@
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div><strong style="font-family:'Playfair Display',serif;font-size:1.2rem;color:white;">Sociology Department</strong></div>
-                    <p>Advancing sociological knowledge in Northern Nigeria and contributing to the national conversation on social development, equity, and justice.</p>
+                    <div><strong style="font-family:'Playfair Display',serif;font-size:1.1rem;color:white;">Sociology Department</strong></div>
+                    <p>Advancing sociological knowledge in Northern Nigeria.</p>
                 </div>
                 <div class="footer-col">
                     <h5>Quick Links</h5>
@@ -756,7 +749,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2025 Department of Sociology, Kaduna State University</span>
+                <span>© 2025 Department of Sociology, KASU</span>
             </div>
         </div>
     </footer>
@@ -765,104 +758,73 @@
 
     <!-- ═══════════ JAVASCRIPT ═══════════ -->
     <script>
-        // ─── CONFIG ──────────────────────────────────────────
-        // ⚠️ REPLACE WITH YOUR SUPABASE CREDENTIALS ⚠️
+        // ─── ⚠️ REPLACE WITH YOUR SUPABASE CREDENTIALS ⚠️ ───
         const SUPABASE_URL = 'https://xonqebmlxlbvvhvmhhxv.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc';
 
         // ─── STATE ──────────────────────────────────────────
-        let allJournals = [];
-        let allFaculty = [];
-        let allNews = [];
-        let allProgrammes = [];
+        let allJournals = [],
+            allFaculty = [],
+            allNews = [],
+            allProgrammes = [];
         let adminSession = null;
         let supabase = null;
 
         // ─── INIT ────────────────────────────────────────────
         function init() {
-            console.log('🚀 Initializing...');
             try {
-                // Initialize Supabase
-                if (SUPABASE_URL && SUPABASE_URL !== 'https://your-project.supabase.co') {
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                    console.log('✅ Supabase initialized');
-                } else {
-                    console.warn('⚠️ Please replace SUPABASE_URL and SUPABASE_ANON_KEY with your actual credentials');
-                    supabase = window.supabase.createClient(
-                        'https://your-project.supabase.co',
-                        'your-anon-key'
-                    );
-                }
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('✅ Supabase initialized');
 
-                // Check for existing session
                 supabase.auth.getSession().then(({ data }) => {
-                    if (data.session) {
-                        adminSession = data.session;
-                        console.log('✅ Found existing admin session');
-                    }
+                    if (data.session) { adminSession = data.session;
+                        console.log('✅ Admin session found'); }
                 }).catch(() => {});
 
-                // Load all data
                 refreshAllData();
 
-                // Setup admin link
                 document.getElementById('adminLink').addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (adminSession) {
-                        showPage('admin');
-                        loadAdminDashboard();
-                    } else {
-                        showPage('admin-login');
-                    }
+                    adminSession ? (showPage('admin'), loadAdminDashboard()) : showPage('admin-login');
                 });
 
-                console.log('✅ Site initialized successfully');
+                // Test button click
+                console.log('✅ Site ready!');
             } catch (e) {
                 console.error('❌ Init error:', e);
+                // Show error on page
+                document.body.innerHTML +=
+                    `<div style="position:fixed;bottom:10px;left:10px;background:red;color:white;padding:10px;z-index:9999;font-size:12px;">⚠️ Error: ${e.message}</div>`;
             }
         }
 
-        // ─── UTILITY FUNCTIONS ──────────────────────────────
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast toast-${type}`;
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast toast-${type}`;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
         }
 
-        function formatDate(dateStr) {
-            if (!dateStr) return 'Invalid date';
-            try {
-                const d = new Date(dateStr);
-                if (isNaN(d.getTime())) return 'Invalid date';
-                return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-            } catch { return 'Invalid date'; }
+        function formatDate(d) {
+            try { return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }); } catch { return 'Invalid date'; }
         }
 
         function getBadgeColor(tag) {
-            const colors = {
-                'Urban Studies': 'badge-urban',
-                'Policy': 'badge-policy',
-                'Gender': 'badge-gender',
-                'Rural': 'badge-sociology',
-                'Politics': 'badge-policy',
-                'Identity': 'badge-dev'
-            };
-            return colors[tag] || 'badge-sociology';
+            const c = { 'Urban Studies': 'badge-urban', 'Policy': 'badge-policy', 'Gender': 'badge-gender' };
+            return c[tag] || 'badge-sociology';
         }
 
         // ─── PAGE NAVIGATION ─────────────────────────────────
         function showPage(page) {
             document.querySelectorAll('.page-content').forEach(el => el.classList.remove('active'));
-            const target = document.getElementById(`page-${page}`);
-            if (target) target.classList.add('active');
+            const t = document.getElementById(`page-${page}`);
+            if (t) t.classList.add('active');
             document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
-            const navLink = document.querySelector(`#mainNav a[data-page="${page}"]`);
-            if (navLink) navLink.classList.add('active');
+            const n = document.querySelector(`#mainNav a[data-page="${page}"]`);
+            if (n) n.classList.add('active');
             document.getElementById('mainNav').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            console.log(`📄 Switched to page: ${page}`);
         }
 
         function toggleMobileMenu() {
@@ -872,252 +834,168 @@
         // ─── DATA FETCHING ──────────────────────────────────
         async function fetchJournals() {
             try {
-                const { data, error } = await supabase
-                    .from('journals')
-                    .select('*')
-                    .order('year', { ascending: false })
-                    .order('volume', { ascending: false });
+                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
                 if (error) throw error;
                 allJournals = data || [];
-                console.log(`📚 Loaded ${allJournals.length} journals`);
                 return allJournals;
-            } catch (e) {
-                console.error('Error fetching journals:', e);
-                return [];
-            }
+            } catch (e) { console.error('Error fetching journals:', e); return []; }
         }
 
         async function fetchFaculty() {
             try {
-                const { data, error } = await supabase
-                    .from('faculty')
-                    .select('*')
-                    .order('display_order', { ascending: true });
+                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
                 if (error) throw error;
                 allFaculty = data || [];
-                console.log(`👨‍🏫 Loaded ${allFaculty.length} faculty members`);
                 return allFaculty;
-            } catch (e) {
-                console.error('Error fetching faculty:', e);
-                return [];
-            }
+            } catch (e) { console.error('Error fetching faculty:', e); return []; }
         }
 
         async function fetchNews() {
             try {
-                const { data, error } = await supabase
-                    .from('news_events')
-                    .select('*')
-                    .order('date', { ascending: false });
+                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
                 if (error) throw error;
                 allNews = data || [];
-                console.log(`📰 Loaded ${allNews.length} news items`);
                 return allNews;
-            } catch (e) {
-                console.error('Error fetching news:', e);
-                return [];
-            }
+            } catch (e) { console.error('Error fetching news:', e); return []; }
         }
 
         async function fetchProgrammes() {
             try {
-                const { data, error } = await supabase
-                    .from('programmes')
-                    .select('*')
-                    .order('level', { ascending: true });
+                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
                 if (error) throw error;
                 allProgrammes = data || [];
-                console.log(`🎓 Loaded ${allProgrammes.length} programmes`);
                 return allProgrammes;
-            } catch (e) {
-                console.error('Error fetching programmes:', e);
-                return [];
-            }
+            } catch (e) { console.error('Error fetching programmes:', e); return []; }
         }
 
         async function refreshAllData() {
-            console.log('🔄 Refreshing all data...');
             await Promise.all([fetchJournals(), fetchFaculty(), fetchNews(), fetchProgrammes()]);
             renderHomePage();
             renderAllPages();
         }
 
-        // ─── RENDER FUNCTIONS ──────────────────────────────
-        function renderJournalCard(article) {
-            const tags = article.tags || [];
-            return `
-                <div class="journal-card">
-                    <div class="journal-meta">
-                        <span class="journal-vol">Vol. ${article.volume} · ${article.year}</span>
-                        <span class="journal-year">${formatDate(article.published_date)}</span>
-                    </div>
-                    <h3>${article.title}</h3>
-                    <div class="authors">${article.authors}</div>
-                    <p class="journal-abstract">${article.abstract}</p>
-                    <div class="journal-card-footer">
-                        <div class="badge-area">
-                            ${tags.slice(0, 2).map(tag => `<span class="badge ${getBadgeColor(tag)}">${tag}</span>`).join('')}
-                        </div>
-                        <button class="read-btn" onclick="viewArticle('${article.slug}')">Read →</button>
-                    </div>
+        // ─── RENDER ──────────────────────────────────────────
+        function renderJournalCard(a) {
+            const tags = a.tags || [];
+            return `<div class="journal-card">
+                <div class="journal-meta">
+                    <span class="journal-vol">Vol. ${a.volume} · ${a.year}</span>
+                    <span class="journal-year">${formatDate(a.published_date)}</span>
                 </div>
-            `;
+                <h3>${a.title}</h3>
+                <div class="authors">${a.authors}</div>
+                <p class="journal-abstract">${a.abstract}</p>
+                <div class="journal-card-footer">
+                    <div class="badge-area">${tags.slice(0,2).map(t => `<span class="badge ${getBadgeColor(t)}">${t}</span>`).join('')}</div>
+                    <button class="read-btn" onclick="viewArticle('${a.slug}')">Read →</button>
+                </div>
+            </div>`;
         }
 
-        function renderFacultyCard(member) {
-            const initials = member.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-            return `
-                <div class="faculty-card">
-                    <div class="faculty-photo">
-                        ${member.photo_url ? `<img src="${member.photo_url}" alt="${member.name}" loading="lazy">` : initials}
-                    </div>
-                    <div class="faculty-info">
-                        <h4>${member.name}</h4>
-                        <div class="title">${member.title}</div>
-                        <div class="specialization">${member.specialization}</div>
-                    </div>
-                </div>
-            `;
+        function renderFacultyCard(m) {
+            const i = m.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+            return `<div class="faculty-card">
+                <div class="faculty-photo">${m.photo_url ? `<img src="${m.photo_url}" alt="${m.name}">` : i}</div>
+                <div class="faculty-info"><h4>${m.name}</h4><div class="title">${m.title}</div><div class="specialization">${m.specialization}</div></div>
+            </div>`;
         }
 
-        function renderNewsItem(item) {
-            const date = new Date(item.date);
-            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const typeClass = {
-                'Seminar': 'type-event',
-                'Call for Papers': 'type-call',
-                'Department News': 'type-news',
-                'Workshop': 'type-event'
-            }[item.type] || 'type-news';
-            return `
-                <div class="news-item">
-                    <div class="news-date-block">
-                        <span class="day">${date.getDate()}</span>
-                        <span class="month">${monthNames[date.getMonth()]}</span>
-                    </div>
-                    <div>
-                        <span class="news-type ${typeClass}">${item.type}</span>
-                        <h4>${item.title}</h4>
-                        <p>${item.description}</p>
-                    </div>
-                </div>
-            `;
+        function renderNewsItem(n) {
+            const d = new Date(n.date);
+            const mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const tc = { 'Seminar': 'type-event', 'Call for Papers': 'type-event', 'Department News': 'type-news' } [n.type] ||
+            'type-news';
+            return `<div class="news-item">
+                <div class="news-date-block"><span class="day">${d.getDate()}</span><span class="month">${mn[d.getMonth()]}</span></div>
+                <div><span class="news-type ${tc}">${n.type}</span><h4>${n.title}</h4><p>${n.description}</p></div>
+            </div>`;
         }
 
-        function renderProgrammeCard(programme) {
-            const levelColors = {
-                'B.Sc': '#3b82f6',
-                'M.Sc': '#22c55e',
-                'PhD': '#a855f7'
-            };
-            return `
-                <div class="programme-card" style="border-left-color: ${levelColors[programme.level] || '#ccc'};">
-                    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:0.5rem;">
-                        <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;">${programme.title}</h3>
-                        <span class="level">${programme.level}</span>
-                    </div>
-                    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:0.5rem;">${programme.description}</p>
-                    ${programme.duration ? `<p style="font-size:12px;color:var(--text-muted);">⏱️ Duration: ${programme.duration}</p>` : ''}
+        function renderProgrammeCard(p) {
+            const colors = { 'B.Sc': '#3b82f6', 'M.Sc': '#22c55e', 'PhD': '#a855f7' };
+            return `<div class="programme-card" style="border-left-color:${colors[p.level]||'#ccc'};">
+                <div style="display:flex;justify-content:space-between;align-items:start;">
+                    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;">${p.title}</h3>
+                    <span class="level">${p.level}</span>
                 </div>
-            `;
+                <p style="color:var(--text-secondary);font-size:13px;margin:0.3rem 0;">${p.description}</p>
+                ${p.duration ? `<p style="font-size:12px;color:var(--text-muted);">⏱️ ${p.duration}</p>` : ''}
+            </div>`;
         }
 
         // ─── VIEW ARTICLE ──────────────────────────────────
         async function viewArticle(slug) {
             try {
-                const { data: article, error } = await supabase
-                    .from('journals')
-                    .select('*')
-                    .eq('slug', slug)
-                    .single();
+                const { data: a, error } = await supabase.from('journals').select('*').eq('slug', slug).single();
                 if (error) throw error;
-
                 const modal = document.createElement('div');
-                modal.style.cssText = `
-                    position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000;
-                    display: flex; align-items: center; justify-content: center;
-                    padding: 2rem; overflow-y: auto;
-                `;
-                modal.innerHTML = `
-                    <div style="background:white;border-radius:12px;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative;">
-                        <button onclick="this.closest('div[style]').remove()" style="position:sticky;top:0;float:right;background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
-                        <h1 style="font-family:'Playfair Display',serif;font-size:1.8rem;">${article.title}</h1>
-                        <p style="color:var(--text-muted);font-style:italic;">${article.authors}</p>
-                        <p style="font-size:14px;color:var(--text-muted);margin:1rem 0;">Vol. ${article.volume} · ${article.year}</p>
-                        <h2>Abstract</h2>
-                        <p style="color:var(--text-secondary);line-height:1.8;margin:1rem 0;">${article.abstract}</p>
-                        ${article.pdf_url ? `<a href="${article.pdf_url}" target="_blank" class="btn-primary">Download PDF</a>` : ''}
-                    </div>
-                `;
+                modal.style.cssText =
+                    `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;`;
+                modal.innerHTML = `<div style="background:white;border-radius:12px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:1.5rem;position:relative;">
+                    <button onclick="this.closest('div[style]').remove()" style="float:right;background:none;border:none;font-size:24px;cursor:pointer;">✕</button>
+                    <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;">${a.title}</h2>
+                    <p style="color:var(--text-muted);font-style:italic;">${a.authors}</p>
+                    <p style="font-size:13px;color:var(--text-muted);margin:0.5rem 0;">Vol. ${a.volume} · ${a.year}</p>
+                    <h3 style="font-size:1rem;margin-top:1rem;">Abstract</h3>
+                    <p style="color:var(--text-secondary);line-height:1.8;">${a.abstract}</p>
+                    ${a.pdf_url ? `<a href="${a.pdf_url}" target="_blank" class="btn-primary" style="display:inline-block;margin-top:1rem;">Download PDF</a>` : ''}
+                </div>`;
                 document.body.appendChild(modal);
-                modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
-            } catch (e) {
-                console.error('Error loading article:', e);
-                showToast('Error loading article', 'error');
-            }
+                modal.onclick = e => { if (e.target === modal) modal.remove(); };
+            } catch (e) { showToast('Error loading article', 'error'); }
         }
 
         // ─── RENDER PAGES ──────────────────────────────────
         function renderHomePage() {
-            const featuredContainer = document.getElementById('featuredJournals');
-            const featured = allJournals.slice(0, 6);
-            featuredContainer.innerHTML = featured.map(renderJournalCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles found. Add some in the admin panel!</p>';
-
-            const facultyContainer = document.getElementById('homeFacultyGrid');
-            const facultyItems = allFaculty.slice(0, 8);
-            facultyContainer.innerHTML = facultyItems.map(renderFacultyCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty members found.</p>';
-
-            const yearsOfPublication = allJournals.length ?
-                new Date().getFullYear() - Math.min(...allJournals.map(j => j.year)) + 1 :
-                0;
-            const uniqueTags = new Set(allJournals.flatMap(j => j.tags || []));
-            document.getElementById('statYears').textContent = `${yearsOfPublication}+`;
-            document.getElementById('statAreas').textContent = uniqueTags.size || 6;
-            document.getElementById('statArticles').textContent = `${allJournals.length}+`;
+            const f = document.getElementById('featuredJournals');
+            f.innerHTML = allJournals.slice(0, 6).map(renderJournalCard).join('') ||
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles. Add in admin.</p>';
+            const ff = document.getElementById('homeFacultyGrid');
+            ff.innerHTML = allFaculty.slice(0, 8).map(renderFacultyCard).join('') ||
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty.</p>';
+            const y = allJournals.length ? new Date().getFullYear() - Math.min(...allJournals.map(j => j.year)) + 1 : 0;
+            const t = new Set(allJournals.flatMap(j => j.tags || []));
+            document.getElementById('statYears').textContent = y + '+';
+            document.getElementById('statAreas').textContent = t.size || 6;
+            document.getElementById('statArticles').textContent = allJournals.length + '+';
             document.getElementById('statFaculty').textContent = allFaculty.length || 48;
         }
 
         function renderAllPages() {
             document.getElementById('allJournalsGrid').innerHTML = allJournals.map(renderJournalCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles found.</p>';
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No articles.</p>';
             document.getElementById('allFacultyGrid').innerHTML = allFaculty.map(renderFacultyCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty found.</p>';
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No faculty.</p>';
             document.getElementById('allNewsList').innerHTML = allNews.map(renderNewsItem).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No news found.</p>';
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No news.</p>';
             document.getElementById('programmesGrid').innerHTML = allProgrammes.map(renderProgrammeCard).join('') ||
-                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No programmes found.</p>';
+                '<p style="text-align:center;color:var(--text-muted);padding:2rem;">No programmes.</p>';
         }
 
-        // ─── SUBMIT PAPER ──────────────────────────────────
-        function submitPaper(event) {
-            event.preventDefault();
-            showToast('Thank you! Your submission has been received.', 'success');
+        // ─── SUBMIT ──────────────────────────────────────────
+        function submitPaper(e) {
+            e.preventDefault();
+            showToast('Thank you! Submission received.', 'success');
             document.getElementById('submissionForm').reset();
             showPage('home');
         }
 
-        // ─── ADMIN FUNCTIONS ─────────────────────────────────
-
-        async function adminLogin(event) {
-            event.preventDefault();
+        // ─── ADMIN ──────────────────────────────────────────
+        async function adminLogin(e) {
+            e.preventDefault();
             const email = document.getElementById('adminEmail').value;
             const password = document.getElementById('adminPassword').value;
-            const errorEl = document.getElementById('adminLoginError');
-
+            const err = document.getElementById('adminLoginError');
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
                 if (error) throw error;
                 adminSession = data.session;
-                errorEl.style.display = 'none';
+                err.style.display = 'none';
                 showToast('Login successful!', 'success');
                 showPage('admin');
                 loadAdminDashboard();
-            } catch (e) {
-                errorEl.textContent = e.message || 'Invalid email or password';
-                errorEl.style.display = 'block';
-            }
+            } catch (e) { err.textContent = e.message || 'Invalid credentials';
+                err.style.display = 'block'; }
         }
 
         async function adminLogout() {
@@ -1127,34 +1005,30 @@
             showPage('home');
         }
 
-        function showAdminPage(page) {
+        function showAdminPage(p) {
             document.querySelectorAll('.admin-content > div').forEach(el => el.style.display = 'none');
-            const target = document.getElementById(`admin-${page}`);
-            if (target) target.style.display = 'block';
+            const t = document.getElementById(`admin-${p}`);
+            if (t) t.style.display = 'block';
             document.querySelectorAll('.admin-sidebar nav a').forEach(a => a.classList.remove('active'));
-            const link = document.querySelector(`.admin-sidebar nav a[data-admin="${page}"]`);
-            if (link) link.classList.add('active');
-            if (page === 'dashboard') loadAdminDashboard();
-            if (page === 'journals') loadAdminJournals();
-            if (page === 'faculty') loadAdminFaculty();
-            if (page === 'news') loadAdminNews();
-            if (page === 'programmes') loadAdminProgrammes();
+            const l = document.querySelector(`.admin-sidebar nav a[data-admin="${p}"]`);
+            if (l) l.classList.add('active');
+            if (p === 'dashboard') loadAdminDashboard();
+            if (p === 'journals') loadAdminJournals();
+            if (p === 'faculty') loadAdminFaculty();
+            if (p === 'news') loadAdminNews();
+            if (p === 'programmes') loadAdminProgrammes();
         }
 
-        function showAdminForm(type) {
-            const formId = `admin${type.charAt(0).toUpperCase() + type.slice(1)}Form`;
-            const el = document.getElementById(formId);
-            if (el) el.style.display = 'block';
-            el.scrollIntoView({ behavior: 'smooth' });
+        function showAdminForm(t) {
+            const el = document.getElementById(`admin${t.charAt(0).toUpperCase() + t.slice(1)}Form`);
+            if (el) { el.style.display = 'block';
+                el.scrollIntoView({ behavior: 'smooth' }); }
         }
 
-        function hideAdminForm(type) {
-            const formId = `admin${type.charAt(0).toUpperCase() + type.slice(1)}Form`;
-            const el = document.getElementById(formId);
+        function hideAdminForm(t) {
+            const el = document.getElementById(`admin${t.charAt(0).toUpperCase() + t.slice(1)}Form`);
             if (el) el.style.display = 'none';
         }
-
-        // ─── LOAD ADMIN DATA ─────────────────────────────────
 
         async function loadAdminDashboard() {
             try {
@@ -1168,162 +1042,56 @@
                 document.getElementById('adminStatFaculty').textContent = fc || 0;
                 document.getElementById('adminStatNews').textContent = nc || 0;
                 document.getElementById('adminStatProgrammes').textContent = pc || 0;
-            } catch (e) {
-                console.error('Error loading dashboard:', e);
-            }
+            } catch (e) { console.error(e); }
         }
 
         async function loadAdminJournals() {
             try {
-                const { data, error } = await supabase
-                    .from('journals')
-                    .select('*')
-                    .order('year', { ascending: false })
-                    .order('volume', { ascending: false });
+                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
                 if (error) throw error;
-                const container = document.getElementById('adminJournalList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals yet.</p>';
-                    return;
-                }
-                container.innerHTML = `
-                    <table>
-                        <thead><tr><th>Title</th><th>Authors</th><th>Vol/Year</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            ${data.map(j => `
-                                <tr>
-                                    <td>${j.title}</td>
-                                    <td>${j.authors}</td>
-                                    <td>Vol.${j.volume} (${j.year})</td>
-                                    <td>
-                                        <div class="actions">
-                                            <button class="delete-btn" onclick="deleteJournal('${j.id}')">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } catch (e) {
-                console.error('Error loading admin journals:', e);
-                document.getElementById('adminJournalList').innerHTML = '<p style="color:red;">Error loading journals</p>';
-            }
+                const c = document.getElementById('adminJournalList');
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals.</p>'; return; }
+                c.innerHTML =
+                    `<table><thead><tr><th>Title</th><th>Authors</th><th>Actions</th></tr></thead><tbody>${data.map(j => `<tr><td>${j.title}</td><td>${j.authors}</td><td><div class="actions"><button class="delete-btn" onclick="deleteJournal('${j.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+            } catch (e) { document.getElementById('adminJournalList').innerHTML = '<p style="color:red;">Error</p>'; }
         }
 
         async function loadAdminFaculty() {
             try {
-                const { data, error } = await supabase
-                    .from('faculty')
-                    .select('*')
-                    .order('display_order', { ascending: true });
+                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
                 if (error) throw error;
-                const container = document.getElementById('adminFacultyList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty yet.</p>';
-                    return;
-                }
-                container.innerHTML = `
-                    <table>
-                        <thead><tr><th>Name</th><th>Title</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            ${data.map(f => `
-                                <tr>
-                                    <td>${f.name}</td>
-                                    <td>${f.title}</td>
-                                    <td>
-                                        <div class="actions">
-                                            <button class="delete-btn" onclick="deleteFaculty('${f.id}')">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } catch (e) {
-                console.error('Error loading admin faculty:', e);
-                document.getElementById('adminFacultyList').innerHTML = '<p style="color:red;">Error loading faculty</p>';
-            }
+                const c = document.getElementById('adminFacultyList');
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty.</p>'; return; }
+                c.innerHTML =
+                    `<table><thead><tr><th>Name</th><th>Title</th><th>Actions</th></tr></thead><tbody>${data.map(f => `<tr><td>${f.name}</td><td>${f.title}</td><td><div class="actions"><button class="delete-btn" onclick="deleteFaculty('${f.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+            } catch (e) { document.getElementById('adminFacultyList').innerHTML = '<p style="color:red;">Error</p>'; }
         }
 
         async function loadAdminNews() {
             try {
-                const { data, error } = await supabase
-                    .from('news_events')
-                    .select('*')
-                    .order('date', { ascending: false });
+                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
                 if (error) throw error;
-                const container = document.getElementById('adminNewsList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news yet.</p>';
-                    return;
-                }
-                container.innerHTML = `
-                    <table>
-                        <thead><tr><th>Title</th><th>Type</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            ${data.map(n => `
-                                <tr>
-                                    <td>${n.title}</td>
-                                    <td>${n.type}</td>
-                                    <td>
-                                        <div class="actions">
-                                            <button class="delete-btn" onclick="deleteNews('${n.id}')">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } catch (e) {
-                console.error('Error loading admin news:', e);
-                document.getElementById('adminNewsList').innerHTML = '<p style="color:red;">Error loading news</p>';
-            }
+                const c = document.getElementById('adminNewsList');
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news.</p>'; return; }
+                c.innerHTML =
+                    `<table><thead><tr><th>Title</th><th>Type</th><th>Actions</th></tr></thead><tbody>${data.map(n => `<tr><td>${n.title}</td><td>${n.type}</td><td><div class="actions"><button class="delete-btn" onclick="deleteNews('${n.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+            } catch (e) { document.getElementById('adminNewsList').innerHTML = '<p style="color:red;">Error</p>'; }
         }
 
         async function loadAdminProgrammes() {
             try {
-                const { data, error } = await supabase
-                    .from('programmes')
-                    .select('*')
-                    .order('level', { ascending: true });
+                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
                 if (error) throw error;
-                const container = document.getElementById('adminProgrammesList');
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes yet.</p>';
-                    return;
-                }
-                container.innerHTML = `
-                    <table>
-                        <thead><tr><th>Title</th><th>Level</th><th>Actions</th></tr></thead>
-                        <tbody>
-                            ${data.map(p => `
-                                <tr>
-                                    <td>${p.title}</td>
-                                    <td>${p.level}</td>
-                                    <td>
-                                        <div class="actions">
-                                            <button class="delete-btn" onclick="deleteProgramme('${p.id}')">Delete</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } catch (e) {
-                console.error('Error loading admin programmes:', e);
-                document.getElementById('adminProgrammesList').innerHTML = '<p style="color:red;">Error loading programmes</p>';
-            }
+                const c = document.getElementById('adminProgrammesList');
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes.</p>'; return; }
+                c.innerHTML =
+                    `<table><thead><tr><th>Title</th><th>Level</th><th>Actions</th></tr></thead><tbody>${data.map(p => `<tr><td>${p.title}</td><td>${p.level}</td><td><div class="actions"><button class="delete-btn" onclick="deleteProgramme('${p.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+            } catch (e) { document.getElementById('adminProgrammesList').innerHTML = '<p style="color:red;">Error</p>'; }
         }
 
         // ─── ADMIN CRUD ──────────────────────────────────────
-
-        // Create Journal
-        async function adminSaveJournal(event) {
-            event.preventDefault();
+        async function adminSaveJournal(e) {
+            e.preventDefault();
             try {
                 const title = document.getElementById('ajTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -1335,43 +1103,34 @@
                     volume: parseInt(document.getElementById('ajVolume').value),
                     year: parseInt(document.getElementById('ajYear').value),
                     published_date: document.getElementById('ajDate').value,
-                    tags: document.getElementById('ajTags').value.split(',').map(t => t.trim()).filter(Boolean),
-                    pdf_url: document.getElementById('ajPdfUrl').value || null
+                    tags: document.getElementById('ajTags').value.split(',').map(t => t.trim()).filter(Boolean)
                 });
                 if (error) throw error;
                 showToast('Journal created!', 'success');
                 document.getElementById('adminJournalForm').querySelector('form').reset();
                 hideAdminForm('journal');
                 loadAdminJournals();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error creating journal', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast(e.message || 'Error', 'error'); }
         }
 
-        // Delete Journal
         async function deleteJournal(id) {
-            if (!confirm('Delete this journal?')) return;
+            if (!confirm('Delete?')) return;
             try {
-                const { error } = await supabase.from('journals').delete().eq('id', id);
-                if (error) throw error;
-                showToast('Journal deleted', 'success');
+                await supabase.from('journals').delete().eq('id', id);
+                showToast('Deleted', 'success');
                 loadAdminJournals();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error deleting journal', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast('Error deleting', 'error'); }
         }
 
-        // Create Faculty
-        async function adminSaveFaculty(event) {
-            event.preventDefault();
+        async function adminSaveFaculty(e) {
+            e.preventDefault();
             try {
                 const { error } = await supabase.from('faculty').insert({
                     name: document.getElementById('afName').value,
                     title: document.getElementById('afTitle').value,
                     specialization: document.getElementById('afSpecialization').value,
-                    email: document.getElementById('afEmail').value || null,
                     photo_url: document.getElementById('afPhoto').value || null,
                     display_order: 0
                 });
@@ -1380,29 +1139,22 @@
                 document.getElementById('adminFacultyForm').querySelector('form').reset();
                 hideAdminForm('faculty');
                 loadAdminFaculty();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error creating faculty', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast(e.message || 'Error', 'error'); }
         }
 
-        // Delete Faculty
         async function deleteFaculty(id) {
-            if (!confirm('Delete this faculty member?')) return;
+            if (!confirm('Delete?')) return;
             try {
-                const { error } = await supabase.from('faculty').delete().eq('id', id);
-                if (error) throw error;
-                showToast('Faculty deleted', 'success');
+                await supabase.from('faculty').delete().eq('id', id);
+                showToast('Deleted', 'success');
                 loadAdminFaculty();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error deleting faculty', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast('Error deleting', 'error'); }
         }
 
-        // Create News
-        async function adminSaveNews(event) {
-            event.preventDefault();
+        async function adminSaveNews(e) {
+            e.preventDefault();
             try {
                 const title = document.getElementById('anTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -1411,37 +1163,29 @@
                     slug,
                     type: document.getElementById('anType').value,
                     date: document.getElementById('anDate').value,
-                    description: document.getElementById('anDescription').value,
-                    image_url: document.getElementById('anImage').value || null
+                    description: document.getElementById('anDescription').value
                 });
                 if (error) throw error;
                 showToast('News created!', 'success');
                 document.getElementById('adminNewsForm').querySelector('form').reset();
                 hideAdminForm('news');
                 loadAdminNews();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error creating news', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast(e.message || 'Error', 'error'); }
         }
 
-        // Delete News
         async function deleteNews(id) {
-            if (!confirm('Delete this news item?')) return;
+            if (!confirm('Delete?')) return;
             try {
-                const { error } = await supabase.from('news_events').delete().eq('id', id);
-                if (error) throw error;
-                showToast('News deleted', 'success');
+                await supabase.from('news_events').delete().eq('id', id);
+                showToast('Deleted', 'success');
                 loadAdminNews();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error deleting news', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast('Error deleting', 'error'); }
         }
 
-        // Create Programme
-        async function adminSaveProgramme(event) {
-            event.preventDefault();
+        async function adminSaveProgramme(e) {
+            e.preventDefault();
             try {
                 const { error } = await supabase.from('programmes').insert({
                     title: document.getElementById('apTitle').value,
@@ -1454,45 +1198,21 @@
                 document.getElementById('adminProgrammeForm').querySelector('form').reset();
                 hideAdminForm('programme');
                 loadAdminProgrammes();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error creating programme', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast(e.message || 'Error', 'error'); }
         }
 
-        // Delete Programme
         async function deleteProgramme(id) {
-            if (!confirm('Delete this programme?')) return;
+            if (!confirm('Delete?')) return;
             try {
-                const { error } = await supabase.from('programmes').delete().eq('id', id);
-                if (error) throw error;
-                showToast('Programme deleted', 'success');
+                await supabase.from('programmes').delete().eq('id', id);
+                showToast('Deleted', 'success');
                 loadAdminProgrammes();
-                await refreshAllData();
-            } catch (e) {
-                showToast(e.message || 'Error deleting programme', 'error');
-            }
+                refreshAllData();
+            } catch (e) { showToast('Error deleting', 'error'); }
         }
 
-        // ─── ADMIN SETTINGS ─────────────────────────────────
-
-        async function adminSaveSettings(event) {
-            event.preventDefault();
-            try {
-                const settings = [
-                    { key: 'site_name', value: document.getElementById('setSiteName').value },
-                    { key: 'site_tagline', value: document.getElementById('setTagline').value }
-                ];
-                for (const s of settings) {
-                    await supabase.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
-                }
-                showToast('Settings saved!', 'success');
-            } catch (e) {
-                showToast(e.message || 'Error saving settings', 'error');
-            }
-        }
-
-        // ─── INIT ────────────────────────────────────────────
+        // ─── START ──────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
