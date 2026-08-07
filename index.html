@@ -1079,15 +1079,8 @@
             background: var(--bg-cream);
             transition: border-color 0.3s;
         }
-        .file-upload-wrapper:hover {
-            border-color: var(--kasu-gold);
-        }
-        .file-upload-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
+        .file-upload-wrapper:hover { border-color: var(--kasu-gold); }
+        .file-upload-area { display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .file-preview {
             margin-top: 8px;
             padding: 8px;
@@ -1096,41 +1089,13 @@
             border: 1px solid var(--border);
             max-width: 100%;
         }
-        .file-preview img {
-            max-width: 150px;
-            max-height: 150px;
-            border-radius: 4px;
-        }
-        .file-preview a {
-            color: var(--kasu-green);
-            font-weight: 500;
-        }
-        .progress-container {
-            display: none;
-            width: 100%;
-            margin-top: 8px;
-        }
-        .progress-bar {
-            background: #f0f0f0;
-            border-radius: 4px;
-            height: 6px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            background: var(--kasu-gold);
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        .progress-text {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-        .upload-status {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        .file-preview img { max-width: 150px; max-height: 150px; border-radius: 4px; }
+        .file-preview a { color: var(--kasu-green); font-weight: 500; }
+        .progress-container { display: none; width: 100%; margin-top: 8px; }
+        .progress-bar { background: #f0f0f0; border-radius: 4px; height: 6px; overflow: hidden; }
+        .progress-fill { background: var(--kasu-gold); height: 100%; width: 0%; transition: width 0.3s; }
+        .progress-text { font-size: 12px; color: var(--text-muted); }
+        .upload-status { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
         /* ── LOADING ── */
         .loading {
@@ -1147,10 +1112,7 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 992px) {
@@ -2664,4 +2626,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-                </html>
+    </html>
