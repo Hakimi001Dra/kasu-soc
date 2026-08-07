@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         /* ── RESET ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,7 +56,7 @@
             flex-wrap: wrap;
             gap: 4px;
         }
-        .top-bar a { color: rgba(255,255,255,0.8); }
+        .top-bar a { color: rgba(255,255,255,0.8); text-decoration: none; }
         .top-bar a:hover { color: var(--kasu-gold); }
         .top-bar .links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 
@@ -868,6 +869,17 @@
         .page-content { display: none; }
         .page-content.active { display: block; }
 
+        /* ── BREADCRUMB ── */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+        .breadcrumb a { color: var(--kasu-green); cursor: pointer; }
+        .breadcrumb span { margin: 0 6px; }
+
         /* ── ADMIN LOGIN ── */
         .admin-login-container {
             min-height: 60vh;
@@ -1058,6 +1070,68 @@
         .admin-form textarea { min-height: 100px; resize: vertical; }
         .admin-form .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
 
+        /* ── FILE UPLOAD ── */
+        .file-upload-wrapper {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            background: var(--bg-cream);
+            transition: border-color 0.3s;
+        }
+        .file-upload-wrapper:hover {
+            border-color: var(--kasu-gold);
+        }
+        .file-upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .file-preview {
+            margin-top: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            max-width: 100%;
+        }
+        .file-preview img {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 4px;
+        }
+        .file-preview a {
+            color: var(--kasu-green);
+            font-weight: 500;
+        }
+        .progress-container {
+            display: none;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .progress-bar {
+            background: #f0f0f0;
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: var(--kasu-gold);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .upload-status {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
         /* ── LOADING ── */
         .loading {
             text-align: center;
@@ -1077,17 +1151,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* ── BREADCRUMB ── */
-        .breadcrumb {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.75rem 2rem;
-            font-size: 12.5px;
-            color: var(--text-muted);
-        }
-        .breadcrumb a { color: var(--kasu-green); cursor: pointer; }
-        .breadcrumb span { margin: 0 6px; }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 992px) {
@@ -1111,6 +1174,7 @@
             .search-inner { flex-direction: column; align-items: stretch; }
             .search-box { max-width: 100%; }
             .volume-banner { padding: 1.5rem; }
+            .admin-form { max-width: 100%; }
         }
         @media (max-width: 480px) {
             .top-bar .inner { flex-direction: column; align-items: center; }
@@ -1121,25 +1185,26 @@
             .admin-stats { grid-template-columns: 1fr 1fr; }
             .journal-grid { grid-template-columns: 1fr; }
             .faculty-grid { grid-template-columns: 1fr 1fr; }
+            .file-upload-wrapper { padding: 0.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
+    <!-- ═══════════ TOP BAR ═══════════ -->
     <div class="top-bar">
         <div class="inner">
             <span>📍 Faculty of Social Sciences, Kaduna State University — Kaduna, Nigeria</span>
             <div class="links">
-                <a href="#">KASU Main Site</a>
-                <a href="#">E-Library</a>
-                <a href="#">Contact</a>
+                <a href="#" id="kasuMainLink">KASU Main Site</a>
+                <a href="#" id="eLibraryLink">E-Library</a>
+                <a href="#" id="contactLink">Contact</a>
                 <a id="adminLink" href="#" style="color: var(--kasu-gold); font-weight: 600;">Admin</a>
             </div>
         </div>
     </div>
 
-    <!-- HEADER -->
+    <!-- ═══════════ HEADER ═══════════ -->
     <header>
         <div class="nav-inner">
             <div class="brand" onclick="showPage('home')">
@@ -1163,14 +1228,14 @@
         </div>
     </header>
 
-    <!-- BREADCRUMB -->
+    <!-- ═══════════ BREADCRUMB ═══════════ -->
     <div class="breadcrumb">
         <a onclick="showPage('home')">Home</a><span>›</span>
         <a onclick="showPage('home')">Sociology Dept.</a><span>›</span>
         <span id="breadcrumbCurrent">Welcome</span>
     </div>
 
-    <!-- PAGE: HOME -->
+    <!-- ═══════════ PAGE: HOME ═══════════ -->
     <div id="page-home" class="page-content active">
 
         <!-- HERO -->
@@ -1437,7 +1502,7 @@
         </section>
     </div>
 
-    <!-- PAGE: JOURNALS -->
+    <!-- ═══════════ PAGE: JOURNALS ═══════════ -->
     <div id="page-journals" class="page-content">
         <div class="hero" style="padding:3rem 2rem;">
             <div class="container-custom">
@@ -1463,7 +1528,7 @@
         </section>
     </div>
 
-    <!-- PAGE: FACULTY -->
+    <!-- ═══════════ PAGE: FACULTY ═══════════ -->
     <div id="page-faculty" class="page-content">
         <div class="hero" style="padding:3rem 2rem;">
             <div class="container-custom">
@@ -1480,7 +1545,7 @@
         </section>
     </div>
 
-    <!-- PAGE: NEWS -->
+    <!-- ═══════════ PAGE: NEWS ═══════════ -->
     <div id="page-news" class="page-content">
         <div class="hero" style="padding:3rem 2rem;">
             <div class="container-custom">
@@ -1497,7 +1562,7 @@
         </section>
     </div>
 
-    <!-- PAGE: PROGRAMMES -->
+    <!-- ═══════════ PAGE: PROGRAMMES ═══════════ -->
     <div id="page-programmes" class="page-content">
         <div class="hero" style="padding:3rem 2rem;">
             <div class="container-custom">
@@ -1514,7 +1579,7 @@
         </section>
     </div>
 
-    <!-- PAGE: SUBMIT -->
+    <!-- ═══════════ PAGE: SUBMIT ═══════════ -->
     <div id="page-submit" class="page-content">
         <div class="hero" style="padding:3rem 2rem;">
             <div class="container-custom">
@@ -1550,7 +1615,7 @@
         </section>
     </div>
 
-    <!-- PAGE: ADMIN LOGIN -->
+    <!-- ═══════════ PAGE: ADMIN LOGIN ═══════════ -->
     <div id="page-admin-login" class="page-content">
         <div class="admin-login-container">
             <div class="admin-login-box">
@@ -1571,7 +1636,7 @@
         </div>
     </div>
 
-    <!-- PAGE: ADMIN DASHBOARD -->
+    <!-- ═══════════ PAGE: ADMIN DASHBOARD ═══════════ -->
     <div id="page-admin" class="page-content">
         <div class="admin-layout">
             <div class="admin-sidebar">
@@ -1609,15 +1674,41 @@
                         <div class="admin-form">
                             <h2>Add Journal Article</h2>
                             <form onsubmit="adminSaveJournal(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="ajTitle" required></div>
-                                <div class="form-group"><label>Authors *</label><input type="text" id="ajAuthors" required></div>
-                                <div class="form-group"><label>Abstract *</label><textarea id="ajAbstract" rows="4" required></textarea></div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-                                    <div class="form-group"><label>Volume *</label><input type="number" id="ajVolume" required></div>
-                                    <div class="form-group"><label>Year *</label><input type="number" id="ajYear" required></div>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="ajTitle" required>
                                 </div>
-                                <div class="form-group"><label>Date *</label><input type="date" id="ajDate" required></div>
-                                <div class="form-group"><label>Tags</label><input type="text" id="ajTags" placeholder="Urban, Policy"></div>
+                                <div class="form-group">
+                                    <label>Authors *</label>
+                                    <input type="text" id="ajAuthors" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Abstract *</label>
+                                    <textarea id="ajAbstract" rows="4" required></textarea>
+                                </div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                    <div class="form-group">
+                                        <label>Volume *</label>
+                                        <input type="number" id="ajVolume" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Year *</label>
+                                        <input type="number" id="ajYear" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Date *</label>
+                                    <input type="date" id="ajDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tags (comma separated)</label>
+                                    <input type="text" id="ajTags" placeholder="Urban, Policy">
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload PDF</label>
+                                    <div id="pdfUploadContainer"></div>
+                                    <input type="hidden" id="ajPdfUrl">
+                                </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline-dark" onclick="hideAdminForm('journal')">Cancel</button>
@@ -1638,10 +1729,31 @@
                         <div class="admin-form">
                             <h2>Add Faculty Member</h2>
                             <form onsubmit="adminSaveFaculty(event)">
-                                <div class="form-group"><label>Name *</label><input type="text" id="afName" required></div>
-                                <div class="form-group"><label>Title *</label><input type="text" id="afTitle" required></div>
-                                <div class="form-group"><label>Specialization *</label><input type="text" id="afSpecialization" required></div>
-                                <div class="form-group"><label>Photo URL</label><input type="url" id="afPhoto"></div>
+                                <div class="form-group">
+                                    <label>Name *</label>
+                                    <input type="text" id="afName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="afTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Specialization *</label>
+                                    <input type="text" id="afSpecialization" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="afEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label>Office</label>
+                                    <input type="text" id="afOffice">
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Photo</label>
+                                    <div id="photoUploadContainer"></div>
+                                    <input type="hidden" id="afPhoto">
+                                </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline-dark" onclick="hideAdminForm('faculty')">Cancel</button>
@@ -1662,8 +1774,12 @@
                         <div class="admin-form">
                             <h2>Add News/Event</h2>
                             <form onsubmit="adminSaveNews(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="anTitle" required></div>
-                                <div class="form-group"><label>Type *</label>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="anTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type *</label>
                                     <select id="anType" required>
                                         <option value="Seminar">Seminar</option>
                                         <option value="Call for Papers">Call for Papers</option>
@@ -1671,8 +1787,19 @@
                                         <option value="Workshop">Workshop</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>Date *</label><input type="date" id="anDate" required></div>
-                                <div class="form-group"><label>Description *</label><textarea id="anDescription" rows="4" required></textarea></div>
+                                <div class="form-group">
+                                    <label>Date *</label>
+                                    <input type="date" id="anDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="anDescription" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Image</label>
+                                    <div id="imageUploadContainer"></div>
+                                    <input type="hidden" id="anImage">
+                                </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline-dark" onclick="hideAdminForm('news')">Cancel</button>
@@ -1693,16 +1820,26 @@
                         <div class="admin-form">
                             <h2>Add Programme</h2>
                             <form onsubmit="adminSaveProgramme(event)">
-                                <div class="form-group"><label>Title *</label><input type="text" id="apTitle" required></div>
-                                <div class="form-group"><label>Level *</label>
+                                <div class="form-group">
+                                    <label>Title *</label>
+                                    <input type="text" id="apTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Level *</label>
                                     <select id="apLevel" required>
                                         <option value="B.Sc">B.Sc</option>
                                         <option value="M.Sc">M.Sc</option>
                                         <option value="PhD">PhD</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>Description *</label><textarea id="apDescription" rows="4" required></textarea></div>
-                                <div class="form-group"><label>Duration</label><input type="text" id="apDuration" placeholder="4 years"></div>
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea id="apDescription" rows="4" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Duration</label>
+                                    <input type="text" id="apDuration" placeholder="4 years">
+                                </div>
                                 <div class="form-actions">
                                     <button type="submit" class="btn-primary">Save</button>
                                     <button type="button" class="btn-outline-dark" onclick="hideAdminForm('programme')">Cancel</button>
@@ -1717,9 +1854,17 @@
                     <h1>Settings</h1>
                     <div class="admin-form" style="max-width:100%;">
                         <form onsubmit="adminSaveSettings(event)">
-                            <div class="form-group"><label>Site Name</label><input type="text" id="setSiteName" value="Department of Sociology, Kaduna State University"></div>
-                            <div class="form-group"><label>Tagline</label><input type="text" id="setTagline" value="Advancing Social Science in Northern Nigeria"></div>
-                            <div class="form-actions"><button type="submit" class="btn-primary">Save Settings</button></div>
+                            <div class="form-group">
+                                <label>Site Name</label>
+                                <input type="text" id="setSiteName" value="Department of Sociology, Kaduna State University">
+                            </div>
+                            <div class="form-group">
+                                <label>Tagline</label>
+                                <input type="text" id="setTagline" value="Advancing Social Science in Northern Nigeria">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Save Settings</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -1727,7 +1872,7 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
+    <!-- ═══════════ FOOTER ═══════════ -->
     <footer>
         <div class="footer-inner">
             <div class="footer-grid">
@@ -1766,7 +1911,7 @@
         </div>
     </footer>
 
-    <!-- TOAST -->
+    <!-- ═══════════ TOAST ═══════════ -->
     <div id="toast" class="toast"></div>
 
     <!-- ═══════════ JAVASCRIPT ═══════════ -->
@@ -1775,13 +1920,231 @@
         const SUPABASE_URL = 'https://xonqebmlxlbvvhvmhhxv.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc';
 
+        // ─── SUPABASE CLIENT ──────────────────────────────
+        let supabase = null;
+        let adminSession = null;
+
         // ─── STATE ──────────────────────────────────────────
         let allJournals = [],
             allFaculty = [],
             allNews = [],
             allProgrammes = [];
-        let adminSession = null;
-        let supabase = null;
+
+        // ─── TOAST ──────────────────────────────────────────
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast toast-${type}`;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 5000);
+        }
+
+        // ─── TOP BAR LINKS ──────────────────────────────────
+        function setupTopBarLinks() {
+            const kasuMain = document.getElementById('kasuMainLink');
+            if (kasuMain) {
+                kasuMain.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.open('https://www.kasu.edu.ng', '_blank');
+                });
+            }
+            const eLibrary = document.getElementById('eLibraryLink');
+            if (eLibrary) {
+                eLibrary.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.open('https://www.kasu.edu.ng/library', '_blank');
+                });
+            }
+            const contact = document.getElementById('contactLink');
+            if (contact) {
+                contact.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showToast('📧 Email: sociology@kasu.edu.ng | 📞 Phone: +234 (0) 62 XXX XXXX', 'info');
+                });
+            }
+        }
+
+        // ─── FILE UPLOAD CLASS ─────────────────────────────
+        class FileUpload {
+            constructor(options = {}) {
+                this.bucket = options.bucket || 'journal-pdfs';
+                this.accept = options.accept || '.pdf';
+                this.label = options.label || 'Upload File';
+                this.onUpload = options.onUpload || (() => {});
+                this.maxSize = options.maxSize || 50 * 1024 * 1024;
+                this.containerId = options.containerId || 'fileUploadContainer';
+            }
+
+            render() {
+                return `
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-area">
+                            <input type="file" 
+                                   id="${this.containerId}_input" 
+                                   accept="${this.accept}" 
+                                   style="display:none;" />
+                            <button type="button" 
+                                    class="btn-primary" 
+                                    onclick="document.getElementById('${this.containerId}_input').click()">
+                                📁 ${this.label}
+                            </button>
+                            <div id="${this.containerId}_status" class="upload-status"></div>
+                            <div id="${this.containerId}_progress" class="progress-container">
+                                <div class="progress-bar">
+                                    <div id="${this.containerId}_progressFill" class="progress-fill"></div>
+                                </div>
+                                <span id="${this.containerId}_progressText" class="progress-text">0%</span>
+                            </div>
+                            <div id="${this.containerId}_preview" class="file-preview"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            init() {
+                const fileInput = document.getElementById(`${this.containerId}_input`);
+                if (!fileInput) return;
+
+                fileInput.addEventListener('change', async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    if (file.size > this.maxSize) {
+                        alert(`File is too large. Maximum size is ${this.maxSize / (1024 * 1024)}MB.`);
+                        fileInput.value = '';
+                        return;
+                    }
+
+                    const statusEl = document.getElementById(`${this.containerId}_status`);
+                    const progressContainer = document.getElementById(`${this.containerId}_progress`);
+                    const progressFill = document.getElementById(`${this.containerId}_progressFill`);
+                    const progressText = document.getElementById(`${this.containerId}_progressText`);
+                    const previewEl = document.getElementById(`${this.containerId}_preview`);
+
+                    progressContainer.style.display = 'block';
+                    statusEl.textContent = `Uploading ${file.name}...`;
+
+                    try {
+                        const url = await this.uploadFile(file);
+                        
+                        statusEl.innerHTML = `✅ Uploaded: <a href="${url}" target="_blank">${file.name}</a>`;
+                        progressFill.style.width = '100%';
+                        progressText.textContent = '100%';
+                        
+                        this.showPreview(url, file.type, previewEl);
+                        this.onUpload(url);
+
+                        setTimeout(() => {
+                            progressContainer.style.display = 'none';
+                            progressFill.style.width = '0%';
+                            progressText.textContent = '0%';
+                        }, 5000);
+
+                    } catch (error) {
+                        statusEl.innerHTML = `❌ Error: ${error.message}`;
+                        progressContainer.style.display = 'none';
+                    }
+                });
+            }
+
+            async uploadFile(file) {
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}.${fileExt}`;
+                const filePath = `${fileName}`;
+
+                const { data, error } = await supabase
+                    .storage
+                    .from(this.bucket)
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (error) throw new Error(error.message);
+
+                const { data: { publicUrl } } = supabase
+                    .storage
+                    .from(this.bucket)
+                    .getPublicUrl(filePath);
+
+                return publicUrl;
+            }
+
+            showPreview(url, fileType, previewEl) {
+                if (fileType.startsWith('image/')) {
+                    previewEl.innerHTML = `
+                        <img src="${url}" alt="Preview">
+                        <br>
+                        <a href="${url}" target="_blank" style="font-size:12px;color:var(--kasu-green);">View full image</a>
+                    `;
+                } else if (fileType === 'application/pdf') {
+                    previewEl.innerHTML = `
+                        <a href="${url}" target="_blank" class="btn-primary" style="font-size:12px;padding:6px 12px;display:inline-block;">📄 View PDF</a>
+                    `;
+                } else {
+                    previewEl.innerHTML = `
+                        <a href="${url}" target="_blank" style="font-size:12px;color:var(--kasu-green);">📎 Download file</a>
+                    `;
+                }
+            }
+        }
+
+        // ─── INIT FILE UPLOADS ─────────────────────────────
+        function initFileUploads() {
+            // PDF Upload
+            const pdfContainer = document.getElementById('pdfUploadContainer');
+            if (pdfContainer) {
+                const pdfUpload = new FileUpload({
+                    bucket: 'journal-pdfs',
+                    accept: '.pdf',
+                    label: '📄 Upload PDF',
+                    maxSize: 100 * 1024 * 1024,
+                    containerId: 'pdfUpload',
+                    onUpload: (url) => {
+                        document.getElementById('ajPdfUrl').value = url;
+                        showToast('PDF uploaded successfully!', 'success');
+                    }
+                });
+                pdfContainer.innerHTML = pdfUpload.render();
+                pdfUpload.init();
+            }
+
+            // Photo Upload
+            const photoContainer = document.getElementById('photoUploadContainer');
+            if (photoContainer) {
+                const photoUpload = new FileUpload({
+                    bucket: 'faculty-photos',
+                    accept: 'image/*',
+                    label: '📸 Upload Photo',
+                    maxSize: 10 * 1024 * 1024,
+                    containerId: 'photoUpload',
+                    onUpload: (url) => {
+                        document.getElementById('afPhoto').value = url;
+                        showToast('Photo uploaded successfully!', 'success');
+                    }
+                });
+                photoContainer.innerHTML = photoUpload.render();
+                photoUpload.init();
+            }
+
+            // Image Upload
+            const imageContainer = document.getElementById('imageUploadContainer');
+            if (imageContainer) {
+                const imageUpload = new FileUpload({
+                    bucket: 'news-images',
+                    accept: 'image/*',
+                    label: '🖼️ Upload Image',
+                    maxSize: 20 * 1024 * 1024,
+                    containerId: 'imageUpload',
+                    onUpload: (url) => {
+                        document.getElementById('anImage').value = url;
+                        showToast('Image uploaded successfully!', 'success');
+                    }
+                });
+                imageContainer.innerHTML = imageUpload.render();
+                imageUpload.init();
+            }
+        }
 
         // ─── INIT ────────────────────────────────────────────
         function init() {
@@ -1794,10 +2157,17 @@
                 }).catch(() => {});
 
                 refreshAllData();
+                setupTopBarLinks();
+                initFileUploads();
 
                 document.getElementById('adminLink').addEventListener('click', function(e) {
                     e.preventDefault();
-                    adminSession ? (showPage('admin'), loadAdminDashboard()) : showPage('admin-login');
+                    if (adminSession) {
+                        showPage('admin');
+                        loadAdminDashboard();
+                    } else {
+                        showPage('admin-login');
+                    }
                 });
 
                 console.log('✅ Site ready!');
@@ -1805,23 +2175,6 @@
                 console.error('❌ Init error:', e);
                 showToast('Error loading site', 'error');
             }
-        }
-
-        function showToast(msg, type = 'success') {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = `toast toast-${type}`;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
-
-        function formatDate(d) {
-            try { return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }); } catch { return 'Invalid date'; }
-        }
-
-        function getBadgeColor(tag) {
-            const c = { 'Urban Studies': 'badge-urban', 'Policy': 'badge-policy', 'Gender': 'badge-gender' };
-            return c[tag] || 'badge-sociology';
         }
 
         // ─── PAGE NAVIGATION ─────────────────────────────────
@@ -1834,7 +2187,8 @@
             if (n) n.classList.add('active');
             document.getElementById('mainNav').classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.getElementById('breadcrumbCurrent').textContent = page.charAt(0).toUpperCase() + page.slice(1);
+            const bc = document.getElementById('breadcrumbCurrent');
+            if (bc) bc.textContent = page.charAt(0).toUpperCase() + page.slice(1);
         }
 
         function toggleMobileMenu() {
@@ -1896,8 +2250,18 @@
         }
 
         // ─── RENDER FUNCTIONS ──────────────────────────────
+        function formatDate(d) {
+            try { return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }); } catch { return 'Invalid date'; }
+        }
+
+        function getBadgeColor(tag) {
+            const c = { 'Urban Studies': 'badge-urban', 'Policy': 'badge-policy', 'Gender': 'badge-gender' };
+            return c[tag] || 'badge-sociology';
+        }
+
         function renderJournalCard(a) {
             const tags = a.tags || [];
+            const pdfLink = a.pdf_url ? `<a href="${a.pdf_url}" target="_blank" style="font-size:11px;color:var(--kasu-green);">📄 PDF</a>` : '';
             return `<div class="journal-card">
                 <div class="journal-meta">
                     <span class="journal-vol">Vol. ${a.volume} · ${a.year}</span>
@@ -1908,7 +2272,10 @@
                 <p class="journal-abstract">${a.abstract}</p>
                 <div class="journal-card-footer">
                     <div class="badge-area">${tags.slice(0,2).map(t => `<span class="badge ${getBadgeColor(t)}">${t}</span>`).join('')}</div>
-                    <button class="read-btn" onclick="viewArticle('${a.slug}')">Read →</button>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        ${pdfLink}
+                        <button class="read-btn" onclick="viewArticle('${a.slug}')">Read →</button>
+                    </div>
                 </div>
             </div>`;
         }
@@ -1928,8 +2295,7 @@
         function renderNewsItem(n) {
             const d = new Date(n.date);
             const mn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const tc = { 'Seminar': 'type-event', 'Call for Papers': 'type-call', 'Department News': 'type-news',
-                'Workshop': 'type-event' } [n.type] || 'type-news';
+            const tc = { 'Seminar': 'type-event', 'Call for Papers': 'type-call', 'Department News': 'type-news', 'Workshop': 'type-event' } [n.type] || 'type-news';
             return `<div class="news-item">
                 <div class="news-date-block"><span class="day">${d.getDate()}</span><span class="month">${mn[d.getMonth()]}</span></div>
                 <div><span class="news-type ${tc}">${n.type}</span><h4>${n.title}</h4><p>${n.description}</p></div>
@@ -1954,8 +2320,7 @@
                 const { data: a, error } = await supabase.from('journals').select('*').eq('slug', slug).single();
                 if (error) throw error;
                 const modal = document.createElement('div');
-                modal.style.cssText =
-                    `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:2rem;overflow-y:auto;`;
+                modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:2rem;overflow-y:auto;`;
                 modal.innerHTML = `<div style="background:white;border-radius:12px;max-width:800px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative;">
                     <button onclick="this.closest('div[style]').remove()" style="position:sticky;top:0;float:right;background:none;border:none;font-size:28px;cursor:pointer;">✕</button>
                     <h1 style="font-family:'Playfair Display',serif;font-size:1.8rem;">${a.title}</h1>
@@ -1963,7 +2328,7 @@
                     <p style="font-size:14px;color:var(--text-muted);margin:1rem 0;">Vol. ${a.volume} · ${a.year}</p>
                     <h2>Abstract</h2>
                     <p style="color:var(--text-secondary);line-height:1.8;">${a.abstract}</p>
-                    ${a.pdf_url ? `<a href="${a.pdf_url}" target="_blank" class="btn-primary" style="display:inline-block;margin-top:1rem;">Download PDF</a>` : ''}
+                    ${a.pdf_url ? `<a href="${a.pdf_url}" target="_blank" class="btn-primary" style="display:inline-block;margin-top:1rem;">📄 Download PDF</a>` : ''}
                 </div>`;
                 document.body.appendChild(modal);
                 modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
@@ -2015,8 +2380,7 @@
             const volumes = [...new Set(allJournals.map(j => `Volume ${j.volume} (${j.year})`))];
             archiveContainer.innerHTML = volumes.map(v => `<li>${v}</li>`).join('') || '<li>No volumes</li>';
 
-            const yearsOfPublication = allJournals.length ? new Date().getFullYear() - Math.min(...allJournals.map(j => j
-                .year)) + 1 : 0;
+            const yearsOfPublication = allJournals.length ? new Date().getFullYear() - Math.min(...allJournals.map(j => j.year)) + 1 : 0;
             const uniqueTags = new Set(allJournals.flatMap(j => j.tags||[]));
             document.getElementById('statYears').textContent = `${yearsOfPublication}+`;
             document.getElementById('statAreas').textContent = uniqueTags.size || 6;
@@ -2062,8 +2426,7 @@
         function showAdminForm(type) {
             const formId = `admin${type.charAt(0).toUpperCase() + type.slice(1)}Form`;
             const el = document.getElementById(formId);
-            if (el) { el.style.display = 'block';
-                el.scrollIntoView({ behavior: 'smooth' }); }
+            if (el) { el.style.display = 'block'; el.scrollIntoView({ behavior: 'smooth' }); }
         }
 
         function hideAdminForm(type) {
@@ -2085,8 +2448,7 @@
                 showToast('Login successful!', 'success');
                 showPage('admin');
                 loadAdminDashboard();
-            } catch (e) { err.textContent = e.message || 'Invalid credentials';
-                err.style.display = 'block'; }
+            } catch (e) { err.textContent = e.message || 'Invalid credentials'; err.style.display = 'block'; }
         }
 
         async function adminLogout() {
@@ -2118,10 +2480,8 @@
                 const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
                 if (error) throw error;
                 const c = document.getElementById('adminJournalList');
-                if (!data || !data.length) { c.innerHTML =
-                    '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals yet.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Authors</th><th>Actions</th></tr></thead><tbody>${data.map(j => `<tr><td>${j.title}</td><td>${j.authors}</td><td><div class="actions"><button class="delete-btn" onclick="deleteJournal('${j.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals yet.</p>'; return; }
+                c.innerHTML = `<table><thead><tr><th>Title</th><th>Authors</th><th>Actions</th></tr></thead><tbody>${data.map(j => `<tr><td>${j.title}</td><td>${j.authors}</td><td><div class="actions"><button class="delete-btn" onclick="deleteJournal('${j.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
             } catch (e) { document.getElementById('adminJournalList').innerHTML = '<p style="color:red;">Error loading</p>'; }
         }
 
@@ -2130,10 +2490,8 @@
                 const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
                 if (error) throw error;
                 const c = document.getElementById('adminFacultyList');
-                if (!data || !data.length) { c.innerHTML =
-                    '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty yet.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Name</th><th>Title</th><th>Actions</th></tr></thead><tbody>${data.map(f => `<tr><td>${f.name}</td><td>${f.title}</td><td><div class="actions"><button class="delete-btn" onclick="deleteFaculty('${f.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty yet.</p>'; return; }
+                c.innerHTML = `<table><thead><tr><th>Name</th><th>Title</th><th>Actions</th></tr></thead><tbody>${data.map(f => `<tr><td>${f.name}</td><td>${f.title}</td><td><div class="actions"><button class="delete-btn" onclick="deleteFaculty('${f.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
             } catch (e) { document.getElementById('adminFacultyList').innerHTML = '<p style="color:red;">Error loading</p>'; }
         }
 
@@ -2142,10 +2500,8 @@
                 const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
                 if (error) throw error;
                 const c = document.getElementById('adminNewsList');
-                if (!data || !data.length) { c.innerHTML =
-                    '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news yet.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Type</th><th>Actions</th></tr></thead><tbody>${data.map(n => `<tr><td>${n.title}</td><td>${n.type}</td><td><div class="actions"><button class="delete-btn" onclick="deleteNews('${n.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news yet.</p>'; return; }
+                c.innerHTML = `<table><thead><tr><th>Title</th><th>Type</th><th>Actions</th></tr></thead><tbody>${data.map(n => `<tr><td>${n.title}</td><td>${n.type}</td><td><div class="actions"><button class="delete-btn" onclick="deleteNews('${n.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
             } catch (e) { document.getElementById('adminNewsList').innerHTML = '<p style="color:red;">Error loading</p>'; }
         }
 
@@ -2154,10 +2510,8 @@
                 const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
                 if (error) throw error;
                 const c = document.getElementById('adminProgrammesList');
-                if (!data || !data.length) { c.innerHTML =
-                    '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes yet.</p>'; return; }
-                c.innerHTML =
-                    `<table><thead><tr><th>Title</th><th>Level</th><th>Actions</th></tr></thead><tbody>${data.map(p => `<tr><td>${p.title}</td><td>${p.level}</td><td><div class="actions"><button class="delete-btn" onclick="deleteProgramme('${p.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
+                if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes yet.</p>'; return; }
+                c.innerHTML = `<table><thead><tr><th>Title</th><th>Level</th><th>Actions</th></tr></thead><tbody>${data.map(p => `<tr><td>${p.title}</td><td>${p.level}</td><td><div class="actions"><button class="delete-btn" onclick="deleteProgramme('${p.id}')">Delete</button></div></td></tr>`).join('')}</tbody></table>`;
             } catch (e) { document.getElementById('adminProgrammesList').innerHTML = '<p style="color:red;">Error loading</p>'; }
         }
 
@@ -2168,15 +2522,16 @@
             try {
                 const title = document.getElementById('ajTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const pdfUrl = document.getElementById('ajPdfUrl').value;
                 const { error } = await supabase.from('journals').insert({
-                    title,
-                    slug,
+                    title, slug,
                     authors: document.getElementById('ajAuthors').value,
                     abstract: document.getElementById('ajAbstract').value,
                     volume: parseInt(document.getElementById('ajVolume').value),
                     year: parseInt(document.getElementById('ajYear').value),
                     published_date: document.getElementById('ajDate').value,
-                    tags: document.getElementById('ajTags').value.split(',').map(t => t.trim()).filter(Boolean)
+                    tags: document.getElementById('ajTags').value.split(',').map(t => t.trim()).filter(Boolean),
+                    pdf_url: pdfUrl || null
                 });
                 if (error) throw error;
                 showToast('Journal created!', 'success');
@@ -2200,11 +2555,14 @@
         async function adminSaveFaculty(e) {
             e.preventDefault();
             try {
+                const photoUrl = document.getElementById('afPhoto').value;
                 const { error } = await supabase.from('faculty').insert({
                     name: document.getElementById('afName').value,
                     title: document.getElementById('afTitle').value,
                     specialization: document.getElementById('afSpecialization').value,
-                    photo_url: document.getElementById('afPhoto').value || null,
+                    email: document.getElementById('afEmail').value || null,
+                    office: document.getElementById('afOffice').value || null,
+                    photo_url: photoUrl || null,
                     display_order: 0
                 });
                 if (error) throw error;
@@ -2231,12 +2589,13 @@
             try {
                 const title = document.getElementById('anTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const imageUrl = document.getElementById('anImage').value;
                 const { error } = await supabase.from('news_events').insert({
-                    title,
-                    slug,
+                    title, slug,
                     type: document.getElementById('anType').value,
                     date: document.getElementById('anDate').value,
-                    description: document.getElementById('anDescription').value
+                    description: document.getElementById('anDescription').value,
+                    image_url: imageUrl || null
                 });
                 if (error) throw error;
                 showToast('News created!', 'success');
@@ -2305,4 +2664,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-    </html>
+                </html>
