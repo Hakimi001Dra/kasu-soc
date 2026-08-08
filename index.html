@@ -1883,7 +1883,7 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc';
 
         // ─── SUPABASE CLIENT ──────────────────────────────
-        let supabase = null;
+        let db = null;
         let adminSession = null;
 
         // ─── STATE ──────────────────────────────────────────
@@ -2014,7 +2014,7 @@
                 const fileName = `${Date.now()}.${fileExt}`;
                 const filePath = `${fileName}`;
 
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .storage
                     .from(this.bucket)
                     .upload(filePath, file, {
@@ -2024,7 +2024,7 @@
 
                 if (error) throw new Error(error.message);
 
-                const { data: { publicUrl } } = supabase
+                const { data: { publicUrl } } = db
                     .storage
                     .from(this.bucket)
                     .getPublicUrl(filePath);
@@ -2111,10 +2111,10 @@
         // ─── INIT ────────────────────────────────────────────
         function init() {
             try {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 console.log('✅ Supabase initialized');
 
-                supabase.auth.getSession().then(({ data }) => {
+                db.auth.getSession().then(({ data }) => {
                     if (data.session) { adminSession = data.session; }
                 }).catch(() => {});
 
@@ -2171,7 +2171,7 @@
         // ─── DATA FETCHING ──────────────────────────────────
         async function fetchJournals() {
             try {
-                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
+                const { data, error } = await db.from('journals').select('*').order('year', { ascending: false });
                 if (error) throw error;
                 allJournals = data || [];
                 return allJournals;
@@ -2180,7 +2180,7 @@
 
         async function fetchFaculty() {
             try {
-                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
+                const { data, error } = await db.from('faculty').select('*').order('display_order', { ascending: true });
                 if (error) throw error;
                 allFaculty = data || [];
                 return allFaculty;
@@ -2189,7 +2189,7 @@
 
         async function fetchNews() {
             try {
-                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
+                const { data, error } = await db.from('news_events').select('*').order('date', { ascending: false });
                 if (error) throw error;
                 allNews = data || [];
                 return allNews;
@@ -2198,7 +2198,7 @@
 
         async function fetchProgrammes() {
             try {
-                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
+                const { data, error } = await db.from('programmes').select('*').order('level', { ascending: true });
                 if (error) throw error;
                 allProgrammes = data || [];
                 return allProgrammes;
@@ -2279,7 +2279,7 @@
         // ─── VIEW ARTICLE ──────────────────────────────────
         async function viewArticle(slug) {
             try {
-                const { data: a, error } = await supabase.from('journals').select('*').eq('slug', slug).single();
+                const { data: a, error } = await db.from('journals').select('*').eq('slug', slug).single();
                 if (error) throw error;
                 const modal = document.createElement('div');
                 modal.style.cssText = `position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:2rem;overflow-y:auto;`;
@@ -2403,7 +2403,7 @@
             const password = document.getElementById('adminPassword').value;
             const err = document.getElementById('adminLoginError');
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                const { data, error } = await db.auth.signInWithPassword({ email, password });
                 if (error) throw error;
                 adminSession = data.session;
                 err.style.display = 'none';
@@ -2414,7 +2414,7 @@
         }
 
         async function adminLogout() {
-            await supabase.auth.signOut();
+            await db.auth.signOut();
             adminSession = null;
             showToast('Logged out', 'info');
             showPage('home');
@@ -2425,10 +2425,10 @@
         async function loadAdminDashboard() {
             try {
                 const [{ count: jc }, { count: fc }, { count: nc }, { count: pc }] = await Promise.all([
-                    supabase.from('journals').select('*', { count: 'exact', head: true }),
-                    supabase.from('faculty').select('*', { count: 'exact', head: true }),
-                    supabase.from('news_events').select('*', { count: 'exact', head: true }),
-                    supabase.from('programmes').select('*', { count: 'exact', head: true })
+                    db.from('journals').select('*', { count: 'exact', head: true }),
+                    db.from('faculty').select('*', { count: 'exact', head: true }),
+                    db.from('news_events').select('*', { count: 'exact', head: true }),
+                    db.from('programmes').select('*', { count: 'exact', head: true })
                 ]);
                 document.getElementById('adminStatJournals').textContent = jc || 0;
                 document.getElementById('adminStatFaculty').textContent = fc || 0;
@@ -2439,7 +2439,7 @@
 
         async function loadAdminJournals() {
             try {
-                const { data, error } = await supabase.from('journals').select('*').order('year', { ascending: false });
+                const { data, error } = await db.from('journals').select('*').order('year', { ascending: false });
                 if (error) throw error;
                 const c = document.getElementById('adminJournalList');
                 if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No journals yet.</p>'; return; }
@@ -2449,7 +2449,7 @@
 
         async function loadAdminFaculty() {
             try {
-                const { data, error } = await supabase.from('faculty').select('*').order('display_order', { ascending: true });
+                const { data, error } = await db.from('faculty').select('*').order('display_order', { ascending: true });
                 if (error) throw error;
                 const c = document.getElementById('adminFacultyList');
                 if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No faculty yet.</p>'; return; }
@@ -2459,7 +2459,7 @@
 
         async function loadAdminNews() {
             try {
-                const { data, error } = await supabase.from('news_events').select('*').order('date', { ascending: false });
+                const { data, error } = await db.from('news_events').select('*').order('date', { ascending: false });
                 if (error) throw error;
                 const c = document.getElementById('adminNewsList');
                 if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No news yet.</p>'; return; }
@@ -2469,7 +2469,7 @@
 
         async function loadAdminProgrammes() {
             try {
-                const { data, error } = await supabase.from('programmes').select('*').order('level', { ascending: true });
+                const { data, error } = await db.from('programmes').select('*').order('level', { ascending: true });
                 if (error) throw error;
                 const c = document.getElementById('adminProgrammesList');
                 if (!data || !data.length) { c.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No programmes yet.</p>'; return; }
@@ -2485,7 +2485,7 @@
                 const title = document.getElementById('ajTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 const pdfUrl = document.getElementById('ajPdfUrl').value;
-                const { error } = await supabase.from('journals').insert({
+                const { error } = await db.from('journals').insert({
                     title, slug,
                     authors: document.getElementById('ajAuthors').value,
                     abstract: document.getElementById('ajAbstract').value,
@@ -2507,7 +2507,7 @@
         async function deleteJournal(id) {
             if (!confirm('Delete this journal?')) return;
             try {
-                await supabase.from('journals').delete().eq('id', id);
+                await db.from('journals').delete().eq('id', id);
                 showToast('Journal deleted', 'success');
                 loadAdminJournals();
                 refreshAllData();
@@ -2518,7 +2518,7 @@
             e.preventDefault();
             try {
                 const photoUrl = document.getElementById('afPhoto').value;
-                const { error } = await supabase.from('faculty').insert({
+                const { error } = await db.from('faculty').insert({
                     name: document.getElementById('afName').value,
                     title: document.getElementById('afTitle').value,
                     specialization: document.getElementById('afSpecialization').value,
@@ -2539,7 +2539,7 @@
         async function deleteFaculty(id) {
             if (!confirm('Delete this faculty member?')) return;
             try {
-                await supabase.from('faculty').delete().eq('id', id);
+                await db.from('faculty').delete().eq('id', id);
                 showToast('Faculty deleted', 'success');
                 loadAdminFaculty();
                 refreshAllData();
@@ -2552,7 +2552,7 @@
                 const title = document.getElementById('anTitle').value;
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 const imageUrl = document.getElementById('anImage').value;
-                const { error } = await supabase.from('news_events').insert({
+                const { error } = await db.from('news_events').insert({
                     title, slug,
                     type: document.getElementById('anType').value,
                     date: document.getElementById('anDate').value,
@@ -2571,7 +2571,7 @@
         async function deleteNews(id) {
             if (!confirm('Delete this news item?')) return;
             try {
-                await supabase.from('news_events').delete().eq('id', id);
+                await db.from('news_events').delete().eq('id', id);
                 showToast('News deleted', 'success');
                 loadAdminNews();
                 refreshAllData();
@@ -2581,7 +2581,7 @@
         async function adminSaveProgramme(e) {
             e.preventDefault();
             try {
-                const { error } = await supabase.from('programmes').insert({
+                const { error } = await db.from('programmes').insert({
                     title: document.getElementById('apTitle').value,
                     level: document.getElementById('apLevel').value,
                     description: document.getElementById('apDescription').value,
@@ -2599,7 +2599,7 @@
         async function deleteProgramme(id) {
             if (!confirm('Delete this programme?')) return;
             try {
-                await supabase.from('programmes').delete().eq('id', id);
+                await db.from('programmes').delete().eq('id', id);
                 showToast('Programme deleted', 'success');
                 loadAdminProgrammes();
                 refreshAllData();
@@ -2616,7 +2616,7 @@
                     { key: 'site_tagline', value: document.getElementById('setTagline').value }
                 ];
                 for (const s of settings) {
-                    await supabase.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
+                    await db.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
                 }
                 showToast('Settings saved!', 'success');
             } catch (e) { showToast(e.message || 'Error saving settings', 'error'); }
