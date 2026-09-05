@@ -739,7 +739,7 @@ async function adminSaveJournal(e) {
     e.preventDefault();
     try {
         const title = document.getElementById('ajTitle').value;
-        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString(36);
         const pdfUrl = document.getElementById('ajPdfUrl').value;
         const { error } = await db.from('journals').insert({
             title, slug,
@@ -803,7 +803,7 @@ async function adminSaveNews(e) {
     e.preventDefault();
     try {
         const title = document.getElementById('anTitle').value;
-        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString(36);
         const imageUrl = document.getElementById('anImage').value;
         const { error } = await db.from('news_events').insert({
             title, slug,
