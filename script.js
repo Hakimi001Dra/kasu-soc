@@ -1482,6 +1482,15 @@ async function submitPaper(e) {
         const { error } = await db.from('submissions').insert(payload);
         if (error) throw error;
 
+        // Notify the admin of the new submission. If this fails (e.g. the
+        // Edge Function isn't deployed), the submission itself still
+        // succeeded — we just log it rather than blocking the author.
+        try {
+            await withTimeout(db.functions.invoke('notify-submission', { body: { record: payload } }), 10000);
+        } catch (notifyErr) {
+            console.warn('Submission saved, but admin notification email failed:', notifyErr.message);
+        }
+
         showToast('Thank you! Your submission has been received.', 'success');
         e.target.reset();
         document.getElementById('subManuscriptPathFull').value = '';
