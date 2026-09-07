@@ -896,7 +896,8 @@ async function adminSaveSettings(e) {
             { key: 'site_logo_url', value: document.getElementById('setSiteLogoUrl').value || '' }
         ];
         for (const s of settings) {
-            await db.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
+            const { error: settingErr } = await db.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
+            if (settingErr) throw new Error(`Could not save "${s.key}": ${settingErr.message}`);
         }
         siteSettings.submission_deadline = document.getElementById('setSubmissionDeadline').value || null;
         siteSettings.submission_email = document.getElementById('setSubmissionEmail').value || 'kjsss@kasu.edu.ng';
@@ -904,11 +905,12 @@ async function adminSaveSettings(e) {
 
         // Admin's own name/title/photo live on their profiles row
         if (adminSession) {
-            await db.from('profiles').update({
+            const { error: profileErr } = await db.from('profiles').update({
                 full_name: document.getElementById('setAdminName').value || null,
                 title: document.getElementById('setAdminTitle').value || null,
                 avatar_url: document.getElementById('setAdminAvatarUrl').value || null
             }).eq('id', adminSession.user.id);
+            if (profileErr) throw new Error(`Could not save your profile: ${profileErr.message}`);
             loadAdminIdentity();
         }
 
