@@ -354,11 +354,12 @@ async function loadAdminSubmissions() {
                 <td>${s.email}</td>
                 <td>${s.research_area || '—'}</td>
                 <td>${s.manuscript_path ? `<button class="edit-btn" style="padding:4px 10px;border:none;border-radius:4px;cursor:pointer;font-size:12px;" onclick="downloadManuscript('${s.manuscript_path}')">📄 Download</button>` : '—'}</td>
-                <td>${s.status}${publishedNote}</td>
+                <td>${s.status}${publishedNote}${notifiedNote}</td>
                 <td><div class="actions">
                     <button class="edit-btn" onclick="updateSubmissionStatus('${s.id}','in_review')">In Review</button>
                     <button class="edit-btn" onclick="updateSubmissionStatus('${s.id}','accepted')">Accept</button>
                     <button class="delete-btn" onclick="updateSubmissionStatus('${s.id}','rejected')">Reject</button>
+                    <button class="edit-btn" onclick="resendSubmissionNotification('${s.id}')">🔔 Notify</button>
                     <button class="${publishBtnClass}" onclick="publishSubmissionToJournal('${s.id}')">${publishBtnLabel}</button>
                     <button class="edit-btn" onclick="assignReviewer('${s.id}')">🧑‍🔬 Assign Reviewer</button>
                     <button class="edit-btn" onclick="viewReviewsForSubmission('${s.id}')">📝 View Reviews</button>
@@ -369,6 +370,23 @@ async function loadAdminSubmissions() {
     } catch (e) { document.getElementById('adminSubmissionsList').innerHTML = '<p style="color:red;">Error loading submissions</p>'; }
 }
 
+// Manually re-sends the "new submission" admin notification email for a
+// submission — useful if the automatic one (sent right after the author
+// submits) failed for any reason.
+async function resendSubmissionNotification(id) {
+    try {
+        const { data: record, error } = await db.from('submissions').select('*').eq('id', id).single();
+        if (error) throw error;
+        await withTimeout(db.functions.invoke('notify-submission', { body: { record } }), 10000);
+        const { error: stampErr } = await db.from('submissions').update({ last_notified_at: new Date().toISOString() }).eq('id', id);
+        if (stampErr) console.error('Could not record last_notified_at:', stampErr);
+        showToast('Notification email sent', 'success');
+        loadAdminSubmissions();
+    } catch (e) {
+        showToast('Could not send notification: ' + (e.message || 'unknown error'), 'error');
+    }
+}
+
 async function downloadManuscript(path) {
     try {
         const { data, error } = await db.storage.from('manuscripts').createSignedUrl(path, 60);
@@ -377,14 +395,24 @@ async function downloadManuscript(path) {
     } catch (e) { showToast('Error generating download link', 'error'); }
 }
 
-// Updates a submission's status. (Email notification to the author has
-// been removed for now — status changes are visible to the author in
-// their own "My Submissions" dashboard when they log in.)
+// Updates a submission's status, then emails the AUTHOR to let them know.
 async function updateSubmissionStatus(id, status) {
     try {
-        const { error } = await db.from('submissions').update({ status }).eq('id', id);
+        const { data: updated, error } = await db.from('submissions').update({ status }).eq('id', id).select().single();
         if (error) throw error;
         showToast(`Marked as ${status}`, 'success');
+
+        // Notify the author of the status change. If this fails, the
+        // status update itself still succeeded — we just log it rather
+        // than blocking the admin action.
+        try {
+            await withTimeout(db.functions.invoke('notify-submission', { body: { type: 'status_update', record: updated } }), 10000);
+            const { error: stampErr } = await db.from('submissions').update({ last_notified_at: new Date().toISOString() }).eq('id', id);
+            if (stampErr) console.error('Could not record last_notified_at:', stampErr);
+        } catch (notifyErr) {
+            console.warn('Status updated, but author notification failed:', notifyErr.message);
+        }
+
         loadAdminSubmissions();
         loadAdminDashboard();
     } catch (e) { showToast('Error updating status', 'error'); }
