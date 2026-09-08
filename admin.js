@@ -377,7 +377,8 @@ async function resendSubmissionNotification(id) {
     try {
         const { data: record, error } = await db.from('submissions').select('*').eq('id', id).single();
         if (error) throw error;
-        await withTimeout(db.functions.invoke('notify-submission', { body: { record } }), 10000);
+        const { error: notifyErr } = await withTimeout(db.functions.invoke('notify-submission', { body: { record } }), 10000);
+        if (notifyErr) throw notifyErr;
         const { error: stampErr } = await db.from('submissions').update({ last_notified_at: new Date().toISOString() }).eq('id', id);
         if (stampErr) console.error('Could not record last_notified_at:', stampErr);
         showToast('Notification email sent', 'success');
@@ -406,11 +407,13 @@ async function updateSubmissionStatus(id, status) {
         // status update itself still succeeded — we just log it rather
         // than blocking the admin action.
         try {
-            await withTimeout(db.functions.invoke('notify-submission', { body: { type: 'status_update', record: updated } }), 10000);
+            const { error: notifyErr } = await withTimeout(db.functions.invoke('notify-submission', { body: { type: 'status_update', record: updated } }), 10000);
+            if (notifyErr) throw notifyErr;
             const { error: stampErr } = await db.from('submissions').update({ last_notified_at: new Date().toISOString() }).eq('id', id);
             if (stampErr) console.error('Could not record last_notified_at:', stampErr);
         } catch (notifyErr) {
             console.warn('Status updated, but author notification failed:', notifyErr.message);
+            showToast('Status updated, but the notification email failed to send.', 'error');
         }
 
         loadAdminSubmissions();
@@ -896,7 +899,7 @@ async function adminSaveSettings(e) {
             { key: 'site_logo_url', value: document.getElementById('setSiteLogoUrl').value || '' }
         ];
         for (const s of settings) {
-            const { error: settingErr } = await db.from('settings').upsert({ key: s.key, value: s.value, type: 'text' });
+            const { error: settingErr } = await db.from('settings').upsert({ key: s.key, value: s.value, type: 'text' }, { onConflict: 'key' });
             if (settingErr) throw new Error(`Could not save "${s.key}": ${settingErr.message}`);
         }
         siteSettings.submission_deadline = document.getElementById('setSubmissionDeadline').value || null;
