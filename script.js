@@ -1486,7 +1486,8 @@ async function submitPaper(e) {
         // Edge Function isn't deployed), the submission itself still
         // succeeded — we just log it rather than blocking the author.
         try {
-            await withTimeout(db.functions.invoke('notify-submission', { body: { record: payload } }), 10000);
+            const { error: notifyErr2 } = await withTimeout(db.functions.invoke('notify-submission', { body: { record: payload } }), 10000);
+            if (notifyErr2) throw notifyErr2;
         } catch (notifyErr) {
             console.warn('Submission saved, but admin notification email failed:', notifyErr.message);
         }
