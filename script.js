@@ -1267,17 +1267,17 @@ async function renderEditorialBoard() {
         }
 
         grid.innerHTML = data.map(m => {
-            const sealClass = m.role === 'admin' ? 'credential-seal credential-seal--admin' : 'credential-seal credential-seal--reviewer';
-            const plaqueClass = m.role === 'admin' ? 'role-plaque role-plaque--admin' : 'role-plaque role-plaque--reviewer';
             const roleLabel = m.title || (m.role === 'admin' ? 'Editor-in-Chief' : 'Peer Reviewer');
-            const avatar = m.avatar_url
-                ? `<img src="${m.avatar_url}" alt="${m.full_name}" style="width:100%;height:100%;object-fit:cover;">`
-                : initialsFromName(m.full_name);
+            const roleLine = m.affiliation ? `${roleLabel}, ${m.affiliation}` : roleLabel;
+            const photoHtml = m.avatar_url
+                ? `<img class="member-card-photo" src="${m.avatar_url}" alt="${m.full_name}">`
+                : `<div class="member-card-photo-placeholder ${m.role === 'admin' ? 'admin' : 'reviewer'}">${initialsFromName(m.full_name)}</div>`;
             return `<div class="member-card">
-                <div class="${sealClass}">${avatar}</div>
-                <div class="board-name">${m.full_name}</div>
-                <span class="${plaqueClass}">${roleLabel}</span>
-                <div class="board-title">${m.affiliation || ''}</div>
+                ${photoHtml}
+                <div class="member-card-caption">
+                    <div class="board-name">${m.full_name}</div>
+                    <div class="role-line">${roleLine}</div>
+                </div>
                 ${m.bio ? `<p class="board-bio">${m.bio}</p>` : ''}
             </div>`;
         }).join('');
