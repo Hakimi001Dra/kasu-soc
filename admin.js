@@ -373,15 +373,20 @@ async function loadAdminSubmissions() {
 // Manually re-sends the "new submission" admin notification email for a
 // submission — useful if the automatic one (sent right after the author
 // submits) failed for any reason.
+// Manually (re)sends the AUTHOR a status-update email for their
+// submission's current status — the "intended" recipient for a button
+// sitting on a specific submission row. Useful if the automatic email
+// (sent when the status was changed) failed or the author says they
+// never got it.
 async function resendSubmissionNotification(id) {
     try {
         const { data: record, error } = await db.from('submissions').select('*').eq('id', id).single();
         if (error) throw error;
-        const { error: notifyErr } = await withTimeout(db.functions.invoke('notify-submission', { body: { record } }), 10000);
+        const { error: notifyErr } = await withTimeout(db.functions.invoke('notify-submission', { body: { type: 'status_update', record } }), 10000);
         if (notifyErr) throw notifyErr;
         const { error: stampErr } = await db.from('submissions').update({ last_notified_at: new Date().toISOString() }).eq('id', id);
         if (stampErr) console.error('Could not record last_notified_at:', stampErr);
-        showToast('Notification email sent', 'success');
+        showToast(`Notification sent to ${record.email}`, 'success');
         loadAdminSubmissions();
     } catch (e) {
         showToast('Could not send notification: ' + (e.message || 'unknown error'), 'error');
