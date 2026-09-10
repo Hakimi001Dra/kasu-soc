@@ -1603,6 +1603,73 @@
             color: var(--text-primary);
         }
         .board-card .board-title { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+
+        /* ── EDITORIAL BOARD MEMBER CARD — larger, photo-forward, distinct
+           from the compact .board-card used for Section tiles ── */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        /* Editorial contributor card — a full-bleed photo up top with a
+           caption band below, matching the "magazine contributor bio"
+           convention rather than a small floating avatar. */
+        .member-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.25s;
+        }
+        .member-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .member-card-photo {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            display: block;
+        }
+        .member-card-photo-placeholder {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 64px;
+            color: #fff;
+            background: var(--kasu-green);
+        }
+        .member-card-photo-placeholder.reviewer { background: var(--kasu-gold); }
+        .member-card-photo-placeholder.admin { background: #6B2737; }
+        .member-card-caption {
+            background: var(--kasu-green);
+            color: #fff;
+            padding: 1.1rem 1.25rem;
+        }
+        .member-card-caption .board-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .member-card-caption .role-line {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.55;
+        }
+        .member-card .board-bio {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 1rem 1.25rem;
+        }
+
         .board-card .board-bio { font-size: 12.5px; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.6; }
 
         /* ── JOURNAL FILTERS ── */
