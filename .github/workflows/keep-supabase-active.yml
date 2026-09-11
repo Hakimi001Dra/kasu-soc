@@ -1,0 +1,22 @@
+name: Keep Supabase Project Active
+
+# Runs twice a week (Monday and Thursday) — comfortably under Supabase's
+# 7-day inactivity threshold, so this never has to run exactly on time
+# to still work.
+on:
+  schedule:
+    - cron: '0 9 * * 1,4'   # 9:00 AM UTC, every Monday and Thursday
+  workflow_dispatch:         # Lets you also trigger it manually from the
+                             # GitHub Actions tab, to test it immediately
+                             # without waiting for the schedule.
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query the database to register real activity
+        run: |
+          curl -s -o /dev/null -w "Supabase ping response: %{http_code}\n" \
+            "https://xonqebmlxlbvvhvmhhxv.supabase.co/rest/v1/settings?select=key&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvbnFlYm1seGxidnZodm1oaHh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzczMTEsImV4cCI6MjEwMTYxMzMxMX0.8txFv3_7FH0XGbfXSy8A17t9xsPoGD-kCkZBARhyXQc"
